@@ -10,24 +10,6 @@ const pool = mysql.createPool({
   database: DB_NAME,
 });
 
-// const connectionBDD = async () => {
-//   const connection = await pool.getConnection();
-//   if (connection) {
-//     console.log('Connected to the MySQL server.');
-//   } else {
-//     console.error('Error connecting to the MySQL server:', error);
-//   }
-// }
-
-// connectionBDD();
-
-// const connection = pool.getConnection();
-// if (connection) {
-//   console.log('Connected to the MySQL server.');
-// } else {
-//   console.error('Error connecting to the MySQL server:', error);
-// }
-
 pool.getConnection()
   .then(result => {
     console.log('Connected to the MySQL server.');

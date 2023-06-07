@@ -14,8 +14,6 @@ const validateUserPost = (req, res, next) => {
         errors.push({ field : "email", message : "This email is required"})
     }
 
-    // const emailRegex = /[a-z0-9._]+@[a-z0-9-]+\.[a-z]{2,3}/;
-
     const emailRegex = /[a-z0-9._]+@makesense.org/;
 
     if (!emailRegex.test(email)) {
