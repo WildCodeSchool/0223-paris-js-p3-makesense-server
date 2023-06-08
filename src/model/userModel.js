@@ -23,10 +23,10 @@ const findOne = (id) => {
 } 
 
 const createUser = (user) => {
-    const { firstname, lastname, email, password, avatar, affiliated_site, tel } = user;
+    const { firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin} = user;
     return db
-        .query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel) values (?, ?, ?, ?, ?, ?, ?)",
-        [firstname, lastname, email, password, avatar, affiliated_site, tel])
+        .query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin])
         .then(([data]) => {
             return { id: data.insertId, ...user };
         })

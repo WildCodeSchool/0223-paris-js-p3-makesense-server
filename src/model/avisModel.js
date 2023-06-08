@@ -2,7 +2,7 @@ const db = require("./db");
 
 const findAll = () => {
     return db
-        .query("select * from avis")
+        .query("select * from user_post_avis")
         .then(([data]) => {
             return data;
         })
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from avis where id = ?", [id])
+        .query("select * from user_post_avis where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -23,10 +23,10 @@ const findOne = (id) => {
 } 
 
 const createAvis = (avis) => {
-    const { text, date } = avis;
+    const { text, date, user_id, post_id } = avis;
     return db
-        .query("insert into avis (text, date ) values (?, ?)",
-        [text, date ])
+        .query("insert into user_post_avis (user_id, post_id, text, date) values (?, ?, ?, ?)",
+        [user_id, post_id, text, date])
         .then(([data]) => {
             return { id: data.insertId, ...avis };
         })
@@ -37,7 +37,7 @@ const createAvis = (avis) => {
 
 const removeAvis = (id) => {
     return db
-        .query("delete from avis where id = ?", [id])
+        .query("delete from user_post_avis where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -48,7 +48,7 @@ const removeAvis = (id) => {
 
 const modifyAvis = (avis, id) => {
     return db
-        .query("update avis set ? where id = ?", [avis, id])
+        .query("update user_post_avis set ? where id = ?", [avis, id])
         .then(([data]) => {
             return data;
         })

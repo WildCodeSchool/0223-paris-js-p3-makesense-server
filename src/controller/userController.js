@@ -9,7 +9,7 @@ const getAllUsers = (req, res) => {
 
 const addUser = (req, res) => {
     const user = req.body;
-    createUser(user)
+    createUser({...user, admin : false})
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
