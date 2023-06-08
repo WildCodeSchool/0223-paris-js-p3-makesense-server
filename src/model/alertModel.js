@@ -2,7 +2,7 @@ const db = require("./db");
 
 const findAll = () => {
     return db
-        .query("select * from user")
+        .query("select * from alert")
         .then(([data]) => {
             return data;
         })
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from user where id = ?", [id])
+        .query("select * from alert where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -22,24 +22,23 @@ const findOne = (id) => {
         })
 } 
 
-const createUser = (user) => {
-    const { firstname, lastname, email, password, avatar, affiliated_site, tel } = user;
-    console.log("user", user)
+const createAlert = (alert) => {
+    const { title , text} = alert;
     return db
-        .query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel) values (?, ?, ?, ?, ?, ?, ?)",
-        [firstname, lastname, email, password, avatar, affiliated_site, tel])
+        .query("insert into alert (title, text) values (?, ?)",
+        [title, text])
         .then(([data]) => {
-            return { id: data.insertId, ...user };
+            return { id: data.insertId, ...alert };
         })
         .catch((err) =>{
-            console.error("err", err)
+            console.log("err", err)
             return err;
         })
 } 
 
-const removeUser = (id) => {
+const removeAlert = (id) => {
     return db
-        .query("delete from user where id = ?", [id])
+        .query("delete from alert where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -48,9 +47,9 @@ const removeUser = (id) => {
         })
 } 
 
-const modifyUser = (user, id) => {
+const modifyAlert = (alert, id) => {
     return db
-        .query("update user set ? where id = ?", [user, id])
+        .query("update alert set ? where id = ?", [alert, id])
         .then(([data]) => {
             return data;
         })
@@ -59,4 +58,4 @@ const modifyUser = (user, id) => {
         })
 } 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser };
+module.exports = { findAll, findOne, createAlert, removeAlert, modifyAlert };

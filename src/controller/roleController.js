@@ -1,59 +1,59 @@
-const { findAll, findOne, createUser, removeUser, modifyUser } = require("../model/userModel"); 
+const { findAll, findOne, createRole, removeRole, modifyRole } = require("../model/roleModel"); 
 
 
-const getAllUsers = (req, res) => {
+const getAllRoles = (req, res) => {
     findAll()
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const addUser = (req, res) => {
-    const user = req.body;
-    createUser(user)
+const addRole = (req, res) => {
+    const role = req.body;
+    createRole(role)
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const getUser = (req, res) => {
+const getRole = (req, res) => {
     const id = req.params.id;
     findOne(id)
     .then((data) => {   
         if (data.length != 0) {
             res.json(data)
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({ message : "No role found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const deleteUser = (req, res) => {
+const deleteRole = (req, res) => {
     const id = req.params.id;
-    removeUser(id)
+    removeRole(id)
     .then((data) => {   
         if (data.affectedRows === 1) {
             res.sendStatus(204);
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({ message : "No role found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const editUser = (req, res) => {
+const editRole = (req, res) => {
     const id = req.params.id;
 
-    const user = req.body;
+    const role = req.body;
 
-    modifyUser(user, id)
+    modifyRole(role, id)
     .then((data) => {
         if (data.affectedRows === 1) {
-            res.json({ id, ...user})
+            res.json({ id, ...role})
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({ message : "No role found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser };
+module.exports = { getAllRoles, getRole, addRole, deleteRole, editRole };

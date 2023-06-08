@@ -1,59 +1,59 @@
-const { findAll, findOne, createUser, removeUser, modifyUser } = require("../model/userModel"); 
+const { findAll, findOne, createAlert, removeAlert, modifyAlert } = require("../model/alertModel"); 
 
 
-const getAllUsers = (req, res) => {
+const getAllAlerts = (req, res) => {
     findAll()
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const addUser = (req, res) => {
-    const user = req.body;
-    createUser(user)
+const addAlert = (req, res) => {
+    const alert = req.body;
+    createAlert(alert)
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const getUser = (req, res) => {
+const getAlert = (req, res) => {
     const id = req.params.id;
     findOne(id)
     .then((data) => {   
         if (data.length != 0) {
             res.json(data)
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({ message : "No alert found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const deleteUser = (req, res) => {
+const deleteAlert = (req, res) => {
     const id = req.params.id;
-    removeUser(id)
+    removeAlert(id)
     .then((data) => {   
         if (data.affectedRows === 1) {
             res.sendStatus(204);
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({ message : "No alert found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const editUser = (req, res) => {
+const editAlert = (req, res) => {
     const id = req.params.id;
 
-    const user = req.body;
+    const alert = req.body;
 
-    modifyUser(user, id)
+    modifyAlert(alert, id)
     .then((data) => {
         if (data.affectedRows === 1) {
-            res.json({ id, ...user})
+            res.json({ id, ...alert})
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({ message : "No alert found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser };
+module.exports = { getAllAlerts, getAlert, addAlert, deleteAlert, editAlert };
