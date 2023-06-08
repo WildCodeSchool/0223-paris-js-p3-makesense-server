@@ -7,6 +7,7 @@ const findAll = () => {
             return data;
         })
         .catch((err) =>{
+            console.error("Erreur", err)
         })
 } 
 
@@ -17,6 +18,7 @@ const findOne = (id) => {
             return data;
         })
         .catch((err) =>{
+            console.error("Erreur", err)
         })
 } 
 
@@ -29,6 +31,7 @@ const createTag = (tag) => {
             return { id: data.insertId, ...tag };
         })
         .catch((err) =>{
+            console.error("Erreur", err)
             return err;
         })
 } 
