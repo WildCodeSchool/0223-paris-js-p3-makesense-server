@@ -23,11 +23,11 @@ const findOne = (id) => {
 } 
 
 const createAlert = (alert) => {
-    const { Alert_id , User_id} = alert;
+    const { title , text} = alert;
     console.log("alert", alert)
     return db
-        .query("insert into alert (Alert_id, User_id) values (?, ?)",
-        [Alert_id, User_id])
+        .query("insert into alert (title, text) values (?, ?)",
+        [title, text])
         .then(([data]) => {
             return { id: data.insertId, ...alert };
         })
