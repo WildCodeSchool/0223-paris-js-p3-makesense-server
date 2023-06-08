@@ -24,7 +24,6 @@ const findOne = (id) => {
 
 const createUser = (user) => {
     const { firstname, lastname, email, password, avatar, affiliated_site, tel } = user;
-    console.log("user", user)
     return db
         .query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel) values (?, ?, ?, ?, ?, ?, ?)",
         [firstname, lastname, email, password, avatar, affiliated_site, tel])
@@ -32,7 +31,7 @@ const createUser = (user) => {
             return { id: data.insertId, ...user };
         })
         .catch((err) =>{
-            console.log("err", err)
+            console.error("err", err)
             return err;
         })
 } 

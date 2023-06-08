@@ -24,7 +24,6 @@ const findOne = (id) => {
 
 const createJob = (job) => {
     const { name } = job;
-    console.log("job", job)
     return db
         .query("insert into job (name) values (?)",
         [name])
@@ -32,7 +31,7 @@ const createJob = (job) => {
             return { id: data.insertId, ...job };
         })
         .catch((err) =>{
-            console.log("err", err)
+            console.error("err", err)
             return err;
         })
 } 
