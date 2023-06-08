@@ -2,18 +2,18 @@ const db = require("./db");
 
 const findAll = () => {
     return db
-        .query("select * from user")
+        .query("select * from job")
         .then(([data]) => {
             return data;
         })
         .catch((err) =>{
             console.error("Error ", err)
         })
-} 
+}
 
 const findOne = (id) => {
     return db
-        .query("select * from user where id = ?", [id])
+        .query("select * from job where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -22,13 +22,13 @@ const findOne = (id) => {
         })
 } 
 
-const createUser = (user) => {
-    const { firstname, lastname, email, password, avatar, affiliated_site, tel } = user;
+const createJob = (job) => {
+    const { name } = job;
     return db
-        .query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel) values (?, ?, ?, ?, ?, ?, ?)",
-        [firstname, lastname, email, password, avatar, affiliated_site, tel])
+        .query("insert into job (name) values (?)",
+        [name])
         .then(([data]) => {
-            return { id: data.insertId, ...user };
+            return { id: data.insertId, ...job };
         })
         .catch((err) =>{
             console.error("err", err)
@@ -36,9 +36,9 @@ const createUser = (user) => {
         })
 } 
 
-const removeUser = (id) => {
+const removeJob = (id) => {
     return db
-        .query("delete from user where id = ?", [id])
+        .query("delete from job where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -47,9 +47,9 @@ const removeUser = (id) => {
         })
 } 
 
-const modifyUser = (user, id) => {
+const modifyJob = (job, id) => {
     return db
-        .query("update user set ? where id = ?", [user, id])
+        .query("update job set ? where id = ?", [job, id])
         .then(([data]) => {
             return data;
         })
@@ -58,4 +58,5 @@ const modifyUser = (user, id) => {
         })
 } 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser };
+
+module.exports = { findAll, findOne, createJob, removeJob, modifyJob };

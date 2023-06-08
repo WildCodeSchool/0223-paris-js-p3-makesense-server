@@ -1,60 +1,58 @@
-const { findAll, findOne, createPost, removePost, modifyPost } = require("../model/postModel"); 
+const { findAll, findOne, createJob, removeJob, modifyJob } = require("../model/jobModel");
 
-
-const getAllPosts = (req, res) => {
+const getAllJobs = (req, res) => {
     findAll()
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const addPost = (req, res) => {
-    const post = req.body;
-    const date = new Date();
-    createPost({...post, date})
+const addJob = (req, res) => {
+    const job = req.body;
+    createJob(job)
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const getPost = (req, res) => {
+const getJob = (req, res) => {
     const id = req.params.id;
     findOne(id)
     .then((data) => {   
         if (data.length != 0) {
             res.json(data)
         } else {
-            res.status(404).json({ message : "No post found"})
+            res.status(404).json({ message : "No job found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const deletePost = (req, res) => {
+const deleteJob = (req, res) => {
     const id = req.params.id;
-    removePost(id)
+    removeJob(id)
     .then((data) => {   
         if (data.affectedRows === 1) {
             res.sendStatus(204);
         } else {
-            res.status(404).json({ message : "No post found"})
+            res.status(404).json({ message : "No job found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-const editPost = (req, res) => {
+const editJob = (req, res) => {
     const id = req.params.id;
 
-    const post = req.body;
+    const job = req.body;
 
-    modifyPost(post, id)
+    modifyJob(job, id)
     .then((data) => {
         if (data.affectedRows === 1) {
-            res.json({ id, ...post})
+            res.json({ id, ...job})
         } else {
-            res.status(404).json({ message : "No post found"})
+            res.status(404).json({ message : "No job found"})
         }
     })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-module.exports = { getAllPosts, getPost, addPost, deletePost, editPost };
+module.exports = { getAllJobs, getJob, addJob, deleteJob, editJob };

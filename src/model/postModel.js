@@ -24,7 +24,6 @@ const findOne = (id) => {
 
 const createPost = (post) => {
     const { titre, description, date, status, profit, risk, avatar } = post;
-    console.log("post", post)
     return db
         .query("insert into post (titre, description, date, status, profit, risk, avatar) values (?, ?, ?, ?, ?, ?, ?)",
         [titre, description, date, status, profit, risk, avatar])
@@ -32,7 +31,7 @@ const createPost = (post) => {
             return { id: data.insertId, ...post };
         })
         .catch((err) =>{
-            console.log("err", err)
+            console.error("error", err)
             return err;
         })
 } 

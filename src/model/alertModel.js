@@ -24,7 +24,6 @@ const findOne = (id) => {
 
 const createAlert = (alert) => {
     const { title , text} = alert;
-    console.log("alert", alert)
     return db
         .query("insert into alert (title, text) values (?, ?)",
         [title, text])

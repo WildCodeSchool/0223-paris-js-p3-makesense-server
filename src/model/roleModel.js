@@ -24,7 +24,6 @@ const findOne = (id) => {
 
 const createRole = (role) => {
     const { name } = role;
-    console.log("role", role)
     return db
         .query("insert into role (name) values (?)",
         [name])
@@ -32,7 +31,7 @@ const createRole = (role) => {
             return { id: data.insertId, ...role };
         })
         .catch((err) =>{
-            console.log("err", err)
+            console.error("err", err)
             return err;
         })
 } 
