@@ -15,7 +15,7 @@ pool.getConnection()
     console.log('Connected to the MySQL server.');
   })
   .catch(err => {
-    onsole.error('Error connecting to the MySQL server:', err);
+    console.error('Error connecting to the MySQL server:', err);
   })
 
 module.exports = pool;
