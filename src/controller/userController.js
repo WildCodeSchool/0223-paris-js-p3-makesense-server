@@ -16,10 +16,8 @@ const addUser = (req, res) => {
 
 const getUser = (req, res) => {
     const id = req.params.id;
-    console.log("id --->", id);
     findOne(id)
     .then((data) => {   
-        console.log("data", data);
         if (data.length != 0) {
             res.json(data)
         } else {
@@ -33,7 +31,6 @@ const deleteUser = (req, res) => {
     const id = req.params.id;
     removeUser(id)
     .then((data) => {   
-        console.log("data.affectedRows", data.affectedRows);
         if (data.affectedRows === 1) {
             res.sendStatus(204);
         } else {

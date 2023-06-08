@@ -32,7 +32,7 @@ const createUser = (user) => {
             return { id: data.insertId, ...user };
         })
         .catch((err) =>{
-            console.log("err", err)
+            console.error("err", err)
             return err;
         })
 } 
