@@ -16,10 +16,8 @@ const addTag = (req, res) => {
 
 const getTag = (req, res) => {
     const id = req.params.id;
-    console.log("id --->", id);
     findOne(id)
     .then((data) => {   
-        console.log("data", data);
         if (data.length != 0) {
             res.json(data)
         } else {

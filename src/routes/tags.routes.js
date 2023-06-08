@@ -5,7 +5,7 @@ const { getAllTag, getTag, addTag, deleteTag, editTag } = require("../controller
 const { validateTag } = require("../validator/tagsValidator.js");
 
 router.get("/", getAllTag);
-router.post("/", addTag);
+router.post("/", validateTag, addTag);
 router.get("/:id", getTag);
 
 module.exports = router;
