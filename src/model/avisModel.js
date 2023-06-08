@@ -24,7 +24,6 @@ const findOne = (id) => {
 
 const createAvis = (avis) => {
     const { text, date } = avis;
-    console.log("avis", avis)
     return db
         .query("insert into avis (text, date ) values (?, ?)",
         [text, date ])
@@ -32,7 +31,6 @@ const createAvis = (avis) => {
             return { id: data.insertId, ...avis };
         })
         .catch((err) =>{
-            console.log("err", err)
             return err;
         })
 } 

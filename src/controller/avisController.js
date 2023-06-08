@@ -10,7 +10,6 @@ const getAllAvis = (req, res) => {
 const addAvis = (req, res) => {
     const avis = req.body;
     const date = new Date();
-    console.log("date", date);
     createAvis({...avis, date})
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({ message :  "Server error"}))
@@ -18,10 +17,8 @@ const addAvis = (req, res) => {
 
 const getAvis = (req, res) => {
     const id = req.params.id;
-    console.log("id --->", id);
     findOne(id)
     .then((data) => {   
-        console.log("data", data);
         if (data.length != 0) {
             res.json(data)
         } else {
@@ -35,7 +32,6 @@ const deleteAvis = (req, res) => {
     const id = req.params.id;
     removeAvis(id)
     .then((data) => {   
-        console.log("data.affectedRows", data.affectedRows);
         if (data.affectedRows === 1) {
             res.sendStatus(204);
         } else {
