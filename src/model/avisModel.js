@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from user_post_avis where id = ?", [id])
+        .execute("select * from user_post_avis where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createAvis = (avis) => {
     const { text, date, user_id, post_id } = avis;
     return db
-        .query("insert into user_post_avis (user_id, post_id, text, date) values (?, ?, ?, ?)",
+        .execute("insert into user_post_avis (user_id, post_id, text, date) values (?, ?, ?, ?)",
         [user_id, post_id, text, date])
         .then(([data]) => {
             return { id: data.insertId, ...avis };
@@ -37,7 +37,7 @@ const createAvis = (avis) => {
 
 const removeAvis = (id) => {
     return db
-        .query("delete from user_post_avis where id = ?", [id])
+        .execute("delete from user_post_avis where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -48,7 +48,7 @@ const removeAvis = (id) => {
 
 const modifyAvis = (avis, id) => {
     return db
-        .query("update user_post_avis set ? where id = ?", [avis, id])
+        .execute("update user_post_avis set ? where id = ?", [avis, id])
         .then(([data]) => {
             return data;
         })

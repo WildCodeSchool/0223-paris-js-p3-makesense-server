@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from alert where id = ?", [id])
+        .execute("select * from alert where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createAlert = (alert) => {
     const { title , text} = alert;
     return db
-        .query("insert into alert (title, text) values (?, ?)",
+        .execute("insert into alert (title, text) values (?, ?)",
         [title, text])
         .then(([data]) => {
             return { id: data.insertId, ...alert };
@@ -38,7 +38,7 @@ const createAlert = (alert) => {
 
 const removeAlert = (id) => {
     return db
-        .query("delete from alert where id = ?", [id])
+        .execute("delete from alert where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -49,7 +49,7 @@ const removeAlert = (id) => {
 
 const modifyAlert = (alert, id) => {
     return db
-        .query("update alert set ? where id = ?", [alert, id])
+        .execute("update alert set ? where id = ?", [alert, id])
         .then(([data]) => {
             return data;
         })

@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from user where id = ?", [id])
+        .execute("select * from user where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createUser = (user) => {
     const { firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin} = user;
     return db
-        .query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        .execute("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin])
         .then(([data]) => {
             return { id: data.insertId, ...user };
@@ -38,7 +38,7 @@ const createUser = (user) => {
 
 const removeUser = (id) => {
     return db
-        .query("delete from user where id = ?", [id])
+        .execute("delete from user where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -49,7 +49,7 @@ const removeUser = (id) => {
 
 const modifyUser = (user, id) => {
     return db
-        .query("update user set ? where id = ?", [user, id])
+        .execute("update user set ? where id = ?", [user, id])
         .then(([data]) => {
             return data;
         })

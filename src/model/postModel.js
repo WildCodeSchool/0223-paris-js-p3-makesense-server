@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from post where id = ?", [id])
+        .execute("select * from post where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createPost = (post) => {
     const { titre, description, date, status, profit, risk, avatar, user_id } = post;
     return db
-        .query("insert into post (titre, description, date, status, profit, risk, avatar, user_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        .execute("insert into post (titre, description, date, status, profit, risk, avatar, user_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
         [titre, description, date, status, profit, risk, avatar, user_id])
         .then(([data]) => {
             return { id: data.insertId, ...post };
@@ -38,7 +38,7 @@ const createPost = (post) => {
 
 const removePost = (id) => {
     return db
-        .query("delete from post where id = ?", [id])
+        .execute("delete from post where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -49,7 +49,7 @@ const removePost = (id) => {
 
 const modifyPost = (post, id) => {
     return db
-        .query("update post set ? where id = ?", [post, id])
+        .execute("update post set ? where id = ?", [post, id])
         .then(([data]) => {
             return data;
         })
