@@ -8,6 +8,7 @@ const findAll = () => {
         })
         .catch((err) =>{
             console.error("Erreur", err)
+            return err;
         })
 } 
 
@@ -19,6 +20,7 @@ const findOne = (id) => {
         })
         .catch((err) =>{
             console.error("Erreur", err)
+            return err;
         })
 } 
 

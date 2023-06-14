@@ -8,6 +8,7 @@ const findAll = () => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -19,6 +20,7 @@ const findOne = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -31,6 +33,7 @@ const createAvis = (avis) => {
             return { id: data.insertId, ...avis };
         })
         .catch((err) =>{
+            console.error("err", err)
             return err;
         })
 } 
@@ -43,6 +46,7 @@ const removeAvis = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -54,6 +58,7 @@ const modifyAvis = (avis, id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
