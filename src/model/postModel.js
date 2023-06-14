@@ -23,10 +23,10 @@ const findOne = (id) => {
 } 
 
 const createPost = (post) => {
-    const { titre, description, date, status, profit, risk, avatar } = post;
+    const { titre, description, date, status, profit, risk, avatar, user_id } = post;
     return db
-        .query("insert into post (titre, description, date, status, profit, risk, avatar) values (?, ?, ?, ?, ?, ?, ?)",
-        [titre, description, date, status, profit, risk, avatar])
+        .query("insert into post (titre, description, date, status, profit, risk, avatar, user_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        [titre, description, date, status, profit, risk, avatar, user_id])
         .then(([data]) => {
             return { id: data.insertId, ...post };
         })
