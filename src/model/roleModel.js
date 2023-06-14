@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from role where id = ?", [id])
+        .execute("select * from role where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createRole = (role) => {
     const { name } = role;
     return db
-        .query("insert into role (name) values (?)",
+        .execute("insert into role (name) values (?)",
         [name])
         .then(([data]) => {
             return { id: data.insertId, ...role };
@@ -38,7 +38,7 @@ const createRole = (role) => {
 
 const removeRole = (id) => {
     return db
-        .query("delete from role where id = ?", [id])
+        .execute("delete from role where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -49,7 +49,7 @@ const removeRole = (id) => {
 
 const modifyRole = (role, id) => {
     return db
-        .query("update role set ? where id = ?", [role, id])
+        .execute("update role set ? where id = ?", [role, id])
         .then(([data]) => {
             return data;
         })

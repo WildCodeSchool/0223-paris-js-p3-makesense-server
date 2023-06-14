@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from job where id = ?", [id])
+        .execute("select * from job where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createJob = (job) => {
     const { name } = job;
     return db
-        .query("insert into job (name) values (?)",
+        .execute("insert into job (name) values (?)",
         [name])
         .then(([data]) => {
             return { id: data.insertId, ...job };
@@ -38,7 +38,7 @@ const createJob = (job) => {
 
 const removeJob = (id) => {
     return db
-        .query("delete from job where id = ?", [id])
+        .execute("delete from job where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -49,7 +49,7 @@ const removeJob = (id) => {
 
 const modifyJob = (job, id) => {
     return db
-        .query("update job set ? where id = ?", [job, id])
+        .execute("update job set ? where id = ?", [job, id])
         .then(([data]) => {
             return data;
         })

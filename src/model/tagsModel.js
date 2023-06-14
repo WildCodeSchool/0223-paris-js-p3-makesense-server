@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db");
 
 const findAll = () => {
     return db
@@ -13,7 +13,7 @@ const findAll = () => {
 
 const findOne = (id) => {
     return db
-        .query("select * from tag where id = ?", [id])
+        .execute("select * from tag where id = ?", [id])
         .then(([data]) => {
             return data;
         })
@@ -25,7 +25,7 @@ const findOne = (id) => {
 const createTag = (tag) => {
     const { name } = tag;
     return db
-        .query("insert into tag (name) values (?)",
+        .execute("insert into tag (name) values (?)",
         [name])
         .then(([data]) => {
             return { id: data.insertId, ...tag };
