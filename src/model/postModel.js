@@ -8,10 +8,11 @@ const findAll = () => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
-const findOne = (id) => {
+const findOnePost = (id) => {
     return db
         .execute("select * from post where id = ?", [id])
         .then(([data]) => {
@@ -19,14 +20,15 @@ const findOne = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
 const createPost = (post) => {
-    const { titre, description, date, status, profit, risk, avatar, user_id } = post;
+    const { title, description, date, status, profit, risk, avatar, user_id } = post;
     return db
-        .execute("insert into post (titre, description, date, status, profit, risk, avatar, user_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
-        [titre, description, date, status, profit, risk, avatar, user_id])
+        .execute("insert into post (title, description, date, status, profit, risk, avatar, user_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        [title, description, date, status, profit, risk, avatar, user_id])
         .then(([data]) => {
             return { id: data.insertId, ...post };
         })
@@ -44,6 +46,7 @@ const removePost = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -55,7 +58,8 @@ const modifyPost = (post, id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
-module.exports = { findAll, findOne, createPost, removePost, modifyPost };
+module.exports = { findAll, findOnePost, createPost, removePost, modifyPost };

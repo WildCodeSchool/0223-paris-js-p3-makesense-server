@@ -1,5 +1,4 @@
-const { findAll, findOne, createAlert, removeAlert, modifyAlert } = require("../model/alertModel"); 
-
+const { findAll, findOne, createAlert, removeAlert, modifyAlert, findAlertByUserID, createAlertByUser } = require("../model/alertModel"); 
 
 const getAllAlerts = (req, res) => {
     findAll()
@@ -10,9 +9,24 @@ const getAllAlerts = (req, res) => {
 const addAlert = (req, res) => {
     const alert = req.body;
     createAlert(alert)
-    .then((data) => res.json(data))
+    .then((data) => {
+        const newAlert = {
+            alert_id : id,
+            user_id : alert.user_id
+        }
+        addAlertByUserId(newAlert);
+    })
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
+
+const addAlertByUserId = (newAlert) => {
+    createAlertByUser(newAlert)
+    .then((data) =>{
+        res.json({...alert, ...newAlert})
+    })
+    .catch((err) => res.status(500).json({ message :  "Server error"}))
+}
+
 
 const getAlert = (req, res) => {
     const id = req.params.id;
@@ -56,4 +70,12 @@ const editAlert = (req, res) => {
     .catch((err) => res.status(500).json({ message :  "Server error"}))
 }
 
-module.exports = { getAllAlerts, getAlert, addAlert, deleteAlert, editAlert };
+const getAlertByUserID = (req, res) => {
+    const id = req.params.id;
+
+    findAlertByUserID(id)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(500).json({ message :  "Server error"}))
+}
+
+module.exports = { getAllAlerts, getAlert, addAlert, deleteAlert, editAlert, getAlertByUserID};
