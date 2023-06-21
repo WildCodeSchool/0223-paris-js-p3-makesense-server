@@ -52,7 +52,7 @@ const removeUser = (id) => {
 
 const modifyUser = (user, id) => {
     return db
-        .execute("update user set ? where id = ?", [user, id])
+        .query("update user set ? where id = ?", [user, id])
         .then(([data]) => {
             return data;
         })

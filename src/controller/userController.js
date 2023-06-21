@@ -1,59 +1,75 @@
 const { findAll, findOne, createUser, removeUser, modifyUser } = require("../model/userModel"); 
 
 
-const getAllUsers = (req, res) => {
-    findAll()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
+const getAllUsers = async (req, res) => {
+    try {
+        const datagetAllUsers = await findAll();
 
-const addUser = (req, res) => {
-    const user = req.body;
-    createUser({...user, admin : false})
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
-
-const getUser = (req, res) => {
-    const id = req.params.id;
-    findOne(id)
-    .then((data) => {   
-        if (data.length != 0) {
-            res.json(data)
+        if (datagetAllUsers.length !== 0) {
+            res.status(200).json(datagetAllUsers)
         } else {
-            res.status(404).json({ message : "No user found"})
+            res.status(404).json({error : "No roles"});
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const deleteUser = (req, res) => {
+const addUser = async (req, res) => {
+    const user = req.body;
+    try {
+        const dataAddUser = await createUser({...user, admin : false});
+        res.status(201).json(dataAddUser)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getUser = async (req, res) => {
     const id = req.params.id;
-    removeUser(id)
-    .then((data) => {   
-        if (data.affectedRows === 1) {
+    try {
+        const dataGetUser = await findOne(id);
+        res.status(201).json(dataGetUser)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const deleteUser = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const dataDeleteUser = await removeUser(id);
+        if (dataDeleteUser.affectedRows === 1) {
             res.sendStatus(204);
         } else {
             res.status(404).json({ message : "No user found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const editUser = (req, res) => {
+const editUser = async  (req, res) => {
     const id = req.params.id;
 
     const user = req.body;
 
-    modifyUser(user, id)
-    .then((data) => {
-        if (data.affectedRows === 1) {
+    try {
+        const dataEditUser = await modifyUser(user, id);
+        if (dataEditUser.affectedRows === 1) {
             res.json({ id, ...user})
         } else {
             res.status(404).json({ message : "No user found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
 module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser };
