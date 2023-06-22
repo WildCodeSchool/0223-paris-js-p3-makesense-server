@@ -1,81 +1,111 @@
 const { findAll, findOne, createAlert, removeAlert, modifyAlert, findAlertByUserID, createAlertByUser } = require("../model/alertModel"); 
 
-const getAllAlerts = (req, res) => {
-    findAll()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+const getAllAlerts = async (req, res) => {
+    try {
+        const data = await  findAll();
+
+        if (data.length !== 0) {
+            res.status(200).json(data)
+        } else {
+            res.status(404).json({error : "No alerts"});
+        }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const addAlert = (req, res) => {
+
+const addAlert = async (req, res) => {
     const alert = req.body;
-    createAlert(alert)
-    .then((data) => {
+    try {
+        const dataAddAlert = await createAlert(alert);
         const newAlert = {
-            alert_id : id,
+            alert_id : dataAddAlert.id,
             user_id : alert.user_id
         }
-        addAlertByUserId(newAlert);
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
 
-const addAlertByUserId = (newAlert) => {
-    createAlertByUser(newAlert)
-    .then((data) =>{
-        res.json({...alert, ...newAlert})
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
-
-
-const getAlert = (req, res) => {
-    const id = req.params.id;
-    findOne(id)
-    .then((data) => {   
-        if (data.length != 0) {
-            res.json(data)
+        const addAlertByUserIdConst =  await addAlertByUserId(newAlert);
+        if (addAlertByUserIdConst == null) {
+            res.json({message : "Error Interne"});
         } else {
-            res.status(404).json({ message : "No alert found"})
+            res.status(201).json(dataAddAlert);
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const deleteAlert = (req, res) => {
+const addAlertByUserId = async (newAlert) => {
+    try {
+        const dataAddAlertByuserId = await createAlertByUser(newAlert);
+        return {...newAlert, ...dataAddAlertByuserId}
+    } catch (err) {
+        console.log("err", err)
+        return null
+    }
+}
+
+
+const getAlert = async (req, res) => {
     const id = req.params.id;
-    removeAlert(id)
-    .then((data) => {   
-        if (data.affectedRows === 1) {
+    try {
+        const dataGetAlert = await findOne(id);
+        res.status(201).json(dataGetAlert)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const deleteAlert = async (req, res) => {
+    const id = req.params.id;
+    // console.log("id", id)
+    try {
+        const dataDeleteAlert = await removeAlert(id);
+        if (dataDeleteAlert.affectedRows === 1) {
             res.sendStatus(204);
         } else {
-            res.status(404).json({ message : "No alert found"})
+            res.status(404).json({ message : "No Alert found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const editAlert = (req, res) => {
+const editAlert = async (req, res) => {
     const id = req.params.id;
 
     const alert = req.body;
 
-    modifyAlert(alert, id)
-    .then((data) => {
-        if (data.affectedRows === 1) {
+    console.log("id", id);
+    console.log("alert", alert)
+    try {
+        const dataEditRole = await modifyAlert(alert, id);
+        if (dataEditRole.affectedRows === 1) {
             res.json({ id, ...alert})
         } else {
-            res.status(404).json({ message : "No alert found"})
+            res.status(404).json({ message : "No Alert found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const getAlertByUserID = (req, res) => {
+const getAlertByUserID = async  (req, res) => {
     const id = req.params.id;
 
-    findAlertByUserID(id)
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    try {
+        const dataFindAlertByUserID = await findAlertByUserID(id);
+        res.status(200).json(dataFindAlertByUserID)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
 module.exports = { getAllAlerts, getAlert, addAlert, deleteAlert, editAlert, getAlertByUserID};

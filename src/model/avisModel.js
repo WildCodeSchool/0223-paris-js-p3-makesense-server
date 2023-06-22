@@ -52,7 +52,7 @@ const removeAvis = (id) => {
 
 const modifyAvis = (avis, id) => {
     return db
-        .execute("update user_post_avis set ? where id = ?", [avis, id])
+        .query("update user_post_avis set ? where id = ?", [avis, id])
         .then(([data]) => {
             return data;
         })

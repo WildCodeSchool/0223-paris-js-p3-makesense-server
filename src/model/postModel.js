@@ -25,10 +25,16 @@ const findOnePost = (id) => {
 } 
 
 const createPost = (post) => {
-    const { title, description, date, status, profit, risk, avatar, user_id } = post;
+    const { title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote } = post;
+    console.log('post --->', post)
+
+    const formatedDeadlineDate = new Date(deadlineDate);
+    const formatedMakeDecisionDate = new Date(makeDecisionDate);
+    const formatedConflitDate = new Date (conflitDate);
+
     return db
-        .execute("insert into post (title, description, date, status, profit, risk, avatar, user_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
-        [title, description, date, status, profit, risk, avatar, user_id])
+        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
+        [title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate, vote])
         .then(([data]) => {
             return { id: data.insertId, ...post };
         })
@@ -51,8 +57,9 @@ const removePost = (id) => {
 } 
 
 const modifyPost = (post, id) => {
+    console.log("post", post)
     return db
-        .execute("update post set ? where id = ?", [post, id])
+        .query("update post set ? where id = ?", [post, id])
         .then(([data]) => {
             return data;
         })

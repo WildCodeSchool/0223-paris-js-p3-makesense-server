@@ -52,7 +52,7 @@ const removeJob = (id) => {
 
 const modifyJob = (job, id) => {
     return db
-        .execute("update job set ? where id = ?", [job, id])
+        .query("update job set ? where id = ?", [job, id])
         .then(([data]) => {
             return data;
         })

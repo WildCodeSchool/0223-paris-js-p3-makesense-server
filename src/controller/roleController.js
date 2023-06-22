@@ -1,59 +1,75 @@
 const { findAll, findOne, createRole, removeRole, modifyRole } = require("../model/roleModel"); 
 
 
-const getAllRoles = (req, res) => {
-    findAll()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
+const getAllRoles = async (req, res) => {
+    try {
+        const datagetAllRoles = await findAll();
 
-const addRole = (req, res) => {
-    const role = req.body;
-    createRole(role)
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
-
-const getRole = (req, res) => {
-    const id = req.params.id;
-    findOne(id)
-    .then((data) => {   
-        if (data.length != 0) {
-            res.json(data)
+        if (datagetAllRoles.length !== 0) {
+            res.status(200).json(datagetAllRoles)
         } else {
-            res.status(404).json({ message : "No role found"})
+            res.status(404).json({error : "No roles"});
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const deleteRole = (req, res) => {
+const addRole = async (req, res) => {
+    const role = req.body;
+    try {
+        const dataAddRole = await createRole(role);
+        res.status(201).json(dataAddRole)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getRole = async (req, res) => {
     const id = req.params.id;
-    removeRole(id)
-    .then((data) => {   
-        if (data.affectedRows === 1) {
+    try {
+        const dataGetRole = await findOne(id);
+        res.status(201).json(dataGetRole)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const deleteRole = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const dataDeleteRole = await removeRole(id);
+        if (dataDeleteRole.affectedRows === 1) {
             res.sendStatus(204);
         } else {
             res.status(404).json({ message : "No role found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const editRole = (req, res) => {
+const editRole = async (req, res) => {
     const id = req.params.id;
-
+    
     const role = req.body;
 
-    modifyRole(role, id)
-    .then((data) => {
-        if (data.affectedRows === 1) {
+    try {
+        const dataEditRole = await modifyRole(role, id);
+        if (dataEditRole.affectedRows === 1) {
             res.json({ id, ...role})
         } else {
             res.status(404).json({ message : "No role found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
 module.exports = { getAllRoles, getRole, addRole, deleteRole, editRole };

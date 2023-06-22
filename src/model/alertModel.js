@@ -39,6 +39,7 @@ const createAlert = (alert) => {
 } 
 
 const removeAlert = (id) => {
+    console.log('id', id)
     return db
         .execute("delete from alert where id = ?", [id])
         .then(([data]) => {
@@ -52,7 +53,7 @@ const removeAlert = (id) => {
 
 const modifyAlert = (alert, id) => {
     return db
-        .execute("update alert set ? where id = ?", [alert, id])
+        .query("update alert set ? where id = ?", [alert, id])
         .then(([data]) => {
             return data;
         })
