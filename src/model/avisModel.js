@@ -86,5 +86,17 @@ const findCountAvisFromPost = (avis) => {
     })
 }
 
+const findAllAvisFromPost = (id) => {
+    return db
+    .execute("select text, user_id from user_post_avis where post_id = ?;", [id])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
 
-module.exports = { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost };
+
+module.exports = { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost };

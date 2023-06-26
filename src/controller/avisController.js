@@ -1,4 +1,4 @@
-const { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost } = require("../model/avisModel"); 
+const { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost } = require("../model/avisModel"); 
 
 const {  findAlertByUserID, createAlertByUser, createAlert } = require("../model/alertModel"); 
 
@@ -109,4 +109,14 @@ const getAvisFromUser = async (req, res) => {
     }
 }
 
-module.exports = { getAllAvis, getAvis, addAvis, deleteAvis, editAvis, getAvisFromUser, countAvis };
+const getAllAvisFromPost = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const datafindAllAvisFromPost = await findAllAvisFromPost(id);
+        res.status(201).json(datafindAllAvisFromPost)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+module.exports = { getAllAvis, getAvis, addAvis, deleteAvis, editAvis, getAvisFromUser, countAvis, getAllAvisFromPost };
