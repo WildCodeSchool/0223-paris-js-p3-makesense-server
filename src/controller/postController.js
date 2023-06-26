@@ -158,4 +158,8 @@ const countAllVoteFromPost = async (req, res) => {
     }
 }
 
-module.exports = { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote };
+
+
+
+
+module.exports = { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote};

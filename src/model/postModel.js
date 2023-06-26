@@ -144,4 +144,8 @@ const findCountPositiveAndNegativeVote = (postId) => {
     })
 }
 
+
+
+
+
 module.exports = { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote};
