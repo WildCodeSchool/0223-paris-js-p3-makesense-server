@@ -1,4 +1,4 @@
-const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote } = require("../model/postModel"); 
+const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant} = require("../model/postModel"); 
 
 
 const getAllPosts = async (req, res) => {
@@ -158,4 +158,45 @@ const countAllVoteFromPost = async (req, res) => {
     }
 }
 
-module.exports = { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote };
+const addUserParticipant = async (req, res) => {
+    const participant = req.body; 
+
+    if (!participant?.users) {
+        return res.status(500).json("Error tab user, user participants")
+    }
+
+    const tab = participant.users;
+    try {
+        for (let i = 0; i < tab.length; i++) {
+            await createUserParticipant(tab[i]);
+        }
+        res.status(201).json("OK add users");
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getExpertFromPost = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const dataGetExpertFromPost = await findExpertFromPost(id);
+        res.status(201).json(dataGetExpertFromPost)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getImpactedFromPost = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const dataGetImpactedFromPost = await findImpactedFromPost(id);
+        res.status(201).json(dataGetImpactedFromPost)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+module.exports = { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote, addUserParticipant, getExpertFromPost, getImpactedFromPost};
