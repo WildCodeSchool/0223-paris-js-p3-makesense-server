@@ -13,7 +13,7 @@ const findAll = () => {
 } 
 
 const createPost = (post) => {
-    const { title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote } = post;
+    const { title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate } = post;
     console.log('post --->', post)
 
     const formatedDeadlineDate = new Date(deadlineDate);
@@ -21,8 +21,8 @@ const createPost = (post) => {
     const formatedConflitDate = new Date (conflitDate);
 
     return db
-        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
-        [title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate, vote])
+        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)",
+        [title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate])
         .then(([data]) => {
             return { id: data.insertId, ...post };
         })
