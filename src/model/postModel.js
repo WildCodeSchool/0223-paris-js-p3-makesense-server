@@ -14,7 +14,6 @@ const findAll = () => {
 
 const createPost = (post) => {
     const { title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate } = post;
-    console.log('post --->', post)
 
     const formatedDeadlineDate = new Date(deadlineDate);
     const formatedMakeDecisionDate = new Date(makeDecisionDate);
@@ -45,7 +44,6 @@ const removePost = (id) => {
 } 
 
 const modifyPost = (post, id) => {
-    console.log("post", post)
     return db
         .query("update post set ? where id = ?", [post, id])
         .then(([data]) => {
