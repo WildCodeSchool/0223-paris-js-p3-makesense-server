@@ -144,8 +144,43 @@ const findCountPositiveAndNegativeVote = (postId) => {
     })
 }
 
+const findExpertFromPost = (postId) => {
+    return db
+    .execute("select u.firstname, u.lastname, u.avatar, p.title  from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and expert= 1;", [postId])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
 
+const findImpactedFromPost = (postId) => {
+    return db
+    .execute("select u.firstname, u.lastname, u.avatar, p.title  from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and impacted= 1;", [postId])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
 
+const createUserParticipant = (participant) => {
+    const { user_id, post_id, expert, impacted} = participant;
 
+    return db
+        .execute("insert into user_participant (user_id, post_id, expert, impacted) values (?, ?, ?, ?)",
+        [user_id, post_id, expert, impacted])
+        .then(([data]) => {
+            return { id: data.insertId, ...participant };
+        })
+        .catch((err) =>{
+            console.error("error", err)
+            return err;
+        })
+} 
 
-module.exports = { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote};
+module.exports = { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant};
