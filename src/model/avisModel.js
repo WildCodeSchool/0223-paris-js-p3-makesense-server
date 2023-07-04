@@ -62,4 +62,41 @@ const modifyAvis = (avis, id) => {
         })
 } 
 
-module.exports = { findAll, findOne, createAvis, removeAvis, modifyAvis };
+const findAvisFromUser = (id) => {
+    return db
+    .execute("select p.title, upa.text from post as p inner join user_post_avis as upa on p.id = upa.post_id where upa.user_id = ?", [id])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
+
+const findCountAvisFromPost = (avis) => {
+    return db
+    .execute("select post_id, count(text) from user_post_avis where post_id = ?  group by post_id;", [avis])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
+
+const findAllAvisFromPost = (id) => {
+    return db
+    .execute("select text, user_id from user_post_avis where post_id = ?;", [id])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
+
+
+module.exports = { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost };
