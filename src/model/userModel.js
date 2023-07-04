@@ -62,4 +62,9 @@ const modifyUser = (user, id) => {
         })
 } 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser };
+const getByEmail = async (email) => {
+    const [data] = await db.query("SELECT * FROM user WHERE email = ?", [email]);
+    return data;
+}
+
+module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail };

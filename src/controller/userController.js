@@ -1,5 +1,6 @@
-const { findAll, findOne, createUser, removeUser, modifyUser } = require("../model/userModel"); 
-
+const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail } = require("../model/userModel"); 
+const argon = require("argon2");
+const jwt = require("jsonwebtoken");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -71,5 +72,44 @@ const editUser = async  (req, res) => {
         res.status(500).json({error : err.message});
     }
 }
+ 
+const register = async (res, req) => {
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser };
+    try {
+        const { lastname, firstname, email,password,avatar, job_id, role_id } = req.body;
+
+        const [user] = await getByEmail(req.body.email);
+        if (user) return res.status(400).json("email already exists");
+        req.body.password = await argon.hash(req.body.password);
+        const result = await createUser(req.body);
+        res.status(201).json({ id: result.insertId, lastname, firstname, email,password,avatar, job_id, role_id  });
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+
+}
+
+const login = async (req, res) => {
+    const {email, password} = req.body;
+    if (!email || !password) return res.status(400).json("Please specify both email and password");
+
+    try {
+        const [user] = await getByEmail(email);
+        if (!user) return res.status(400).json("Invalid email");
+        if (await argon.verify(user.password, password)) {
+            const token = jwt.sign({id: user.id, role: user.role_id}, process.env.JWT_AUTH_SECRET, {expiresIn: "1h"});
+            res.cookie("access_token", token, {httpOnly: true, secure: process.env.NODE_ENV == "production"});
+            res.status(200).json({email, id: user.id, role: user.role, avatar: user.avatar});
+        } 
+        else
+            res.status(400).json("invalid password");
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+
+}
+
+module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login };
