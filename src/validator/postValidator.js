@@ -1,9 +1,9 @@
 const validatePost = (req, res, next) => {
-    const { titre, description, status, profit, risk, avatar } = req.body;
+    const { title, description, status, profit, risk, avatar } = req.body;
     const errors = [];
 
-    if (titre == null || titre === "") {
-        errors.push({ field : "titre", message : "This titre is required"})
+    if (title == null || title === "") {
+        errors.push({ field : "title", message : "This title is required"})
     }
 
     if (description == null || description === "") {

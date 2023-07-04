@@ -8,6 +8,7 @@ const findAll = () => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -19,6 +20,7 @@ const findOne = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -44,17 +46,19 @@ const removeRole = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
 const modifyRole = (role, id) => {
     return db
-        .execute("update role set ? where id = ?", [role, id])
+        .query("update role set ? where id = ?", [role, id])
         .then(([data]) => {
             return data;
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 

@@ -8,6 +8,7 @@ const findAll = () => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 }
 
@@ -19,6 +20,7 @@ const findOne = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
@@ -44,17 +46,19 @@ const removeJob = (id) => {
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 
 const modifyJob = (job, id) => {
     return db
-        .execute("update job set ? where id = ?", [job, id])
+        .query("update job set ? where id = ?", [job, id])
         .then(([data]) => {
             return data;
         })
         .catch((err) =>{
             console.error("Error ", err)
+            return err;
         })
 } 
 

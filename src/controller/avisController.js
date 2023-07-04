@@ -1,60 +1,89 @@
 const { findAll, findOne, createAvis, removeAvis, modifyAvis } = require("../model/avisModel"); 
 
+const {  findAlertByUserID, createAlertByUser, createAlert } = require("../model/alertModel"); 
 
-const getAllAvis = (req, res) => {
-    findAll()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+const { findOnePost } = require("../model/postModel");
+
+const getAllAvis = async (req, res) => {
+    try {
+        const datagetAllAvis = await findAll();
+        if (datagetAllAvis.length !== 0) {
+            res.status(200).json(datagetAllAvis)
+        } else {
+            res.status(404).json({error : "No avis"});
+        }
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const addAvis = (req, res) => {
+const addAvis = async (req, res) => {
     const avis = req.body;
     const date = new Date();
-    createAvis({...avis, date})
-    .then((data) => res.json(data))
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
-}
-
-const getAvis = (req, res) => {
-    const id = req.params.id;
-    findOne(id)
-    .then((data) => {   
-        if (data.length != 0) {
-            res.json(data)
+    try {
+        await createAvis({...avis, date});
+        const [getPost] = await findOnePost(avis.post_id)
+        if (getPost.length === 0) {
+            res.status(404).json({error : "No Post"});
         } else {
-            res.status(404).json({ message : "No avis found"})
+            console.log("avis", avis)
+            const addAlert = await createAlert(getPost);
+            const newAlert = {
+                alert_id : addAlert.id,
+                user_id : avis.user_id
+            }
+            const addAlertByUser = await createAlertByUser(newAlert);
+            res.status(200).json({addAlertByUser})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const deleteAvis = (req, res) => {
+const getAvis = async (req, res) => {
     const id = req.params.id;
-    removeAvis(id)
-    .then((data) => {   
-        if (data.affectedRows === 1) {
+    try {
+        const dataGetAvis = await findOne(id);
+        res.status(201).json(dataGetAvis)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const deleteAvis = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const dataDeleteAvis = await removeAvis(id);
+        if (dataDeleteAvis.affectedRows === 1) {
             res.sendStatus(204);
         } else {
             res.status(404).json({ message : "No avis found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
-const editAvis = (req, res) => {
+const editAvis = async (req, res) => {
     const id = req.params.id;
 
     const avis = req.body;
 
-    modifyAvis(avis, id)
-    .then((data) => {
-        if (data.affectedRows === 1) {
+    try {
+        const dataEditAvis = await modifyRole(avis, id);
+        if (dataEditAvis.affectedRows === 1) {
             res.json({ id, ...avis})
         } else {
             res.status(404).json({ message : "No avis found"})
         }
-    })
-    .catch((err) => res.status(500).json({ message :  "Server error"}))
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
 }
 
 module.exports = { getAllAvis, getAvis, addAvis, deleteAvis, editAvis };
