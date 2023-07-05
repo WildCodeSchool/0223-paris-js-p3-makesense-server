@@ -13,16 +13,15 @@ const findAll = () => {
 } 
 
 const createPost = (post) => {
-    const { title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote } = post;
-    console.log('post --->', post)
+    const { title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate } = post;
 
     const formatedDeadlineDate = new Date(deadlineDate);
     const formatedMakeDecisionDate = new Date(makeDecisionDate);
     const formatedConflitDate = new Date (conflitDate);
 
     return db
-        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
-        [title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate, vote])
+        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)",
+        [title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate])
         .then(([data]) => {
             return { id: data.insertId, ...post };
         })
@@ -45,7 +44,6 @@ const removePost = (id) => {
 } 
 
 const modifyPost = (post, id) => {
-    console.log("post", post)
     return db
         .query("update post set ? where id = ?", [post, id])
         .then(([data]) => {
