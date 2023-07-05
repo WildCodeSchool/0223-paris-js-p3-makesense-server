@@ -75,15 +75,12 @@ const editUser = async  (req, res) => {
  
 const register = async (req, res) => {
     try {
-        console.log(" LE BODY ", req.body);
         const { lastname, firstname, email, password, avatar, job_id, role_id } = req.body;
         const user = await getByEmail(req.body.email);
-        console.log("LE USEEEEER", user);
         if (user.lenght === 0) return res.status(400).json("email already exists");
         req.body.password = await argon.hash(req.body.password);
         const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0"};
         const result = await createUserAdmin(newBody);
-        console.log("RESULT", result);
         res.status(201).json({ id: result.insertId, lastname, firstname, email, password, avatar, job_id, role_id  });
 
     } catch (err) {
@@ -102,7 +99,6 @@ const login = async (req, res) => {
         if (!user) return res.status(400).json("Invalid email");
         if (await argon.verify(user.password, password)) {
             const token = jwt.sign({id: user.id, role: user.role_id, job: user.job_id, admin: user.admin}, process.env.JWT_AUTH_SECRET, {expiresIn: "1h"});
-            console.log("COUCOU C MAMAN !", token)
             res.cookie("access_token", token, {httpOnly: true, secure: process.env.NODE_ENV == "production"});
             res.status(200).json({email, id: user.id, role: user.role, avatar: user.avatar, job: user.job_id, admin: user.admin});
         } 
