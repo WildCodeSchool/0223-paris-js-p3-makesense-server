@@ -1,4 +1,4 @@
-const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail } = require("../model/userModel"); 
+const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail, createUserAdmin } = require("../model/userModel"); 
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
 
@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
         if (datagetAllUsers.length !== 0) {
             res.status(200).json(datagetAllUsers)
         } else {
-            res.status(404).json({error : "No roles"});
+            res.status(404).json({error : "No users"});
         }
 
     } catch (err) {
@@ -73,16 +73,18 @@ const editUser = async  (req, res) => {
     }
 }
  
-const register = async (res, req) => {
-
+const register = async (req, res) => {
     try {
-        const { lastname, firstname, email,password,avatar, job_id, role_id } = req.body;
-
-        const [user] = await getByEmail(req.body.email);
-        if (user) return res.status(400).json("email already exists");
+        console.log(" LE BODY ", req.body);
+        const { lastname, firstname, email, password, avatar, job_id, role_id } = req.body;
+        const user = await getByEmail(req.body.email);
+        console.log("LE USEEEEER", user);
+        if (user.lenght === 0) return res.status(400).json("email already exists");
         req.body.password = await argon.hash(req.body.password);
-        const result = await createUser(req.body);
-        res.status(201).json({ id: result.insertId, lastname, firstname, email,password,avatar, job_id, role_id  });
+        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0"};
+        const result = await createUserAdmin(newBody);
+        console.log("RESULT", result);
+        res.status(201).json({ id: result.insertId, lastname, firstname, email, password, avatar, job_id, role_id  });
 
     } catch (err) {
         console.log("err", err)

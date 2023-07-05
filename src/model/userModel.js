@@ -67,4 +67,19 @@ const getByEmail = async (email) => {
     return data;
 }
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail };
+
+const createUserAdmin = (user) => {
+    const { firstname, lastname, email, password, avatar, job_id, role_id, admin} = user;
+    return db
+        .execute("insert into user (firstname, lastname, email, password, job_id, role_id, admin, avatar) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        [firstname, lastname, email, password, job_id, role_id, admin, avatar])
+        .then(([data]) => {
+            return { id: data.insertId, ...user };
+        })
+        .catch((err) =>{
+            console.error("err", err)
+            return err;
+        })
+} 
+
+module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin};
