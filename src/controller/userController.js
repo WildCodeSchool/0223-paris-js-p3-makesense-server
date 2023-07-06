@@ -29,6 +29,18 @@ const addUser = async (req, res) => {
     }
 }
 
+
+const getCurrentUser = async (req, res, next) => {
+    console.log(req.idUser, "getCurrentUser")
+    try {
+        const [user] = await findOne(req.idUser);
+        res.status(200).json(user);
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 const getUser = async (req, res) => {
     const id = req.params.id;
     try {
@@ -99,8 +111,7 @@ const login = async (req, res) => {
         if (!user) return res.status(400).json("Invalid email");
         if (await argon.verify(user.password, password)) {
             const token = jwt.sign({id: user.id, role: user.role_id, job: user.job_id, admin: user.admin}, process.env.JWT_AUTH_SECRET, {expiresIn: "1h"});
-            res.cookie("access_token", token, {httpOnly: true, secure: process.env.NODE_ENV == "production"});
-            res.status(200).json({email, id: user.id, role: user.role, avatar: user.avatar, job: user.job_id, admin: user.admin});
+            res.cookie("access_token", token, {httpOnly: true, secure: process.env.NODE_ENV == "production"}).status(200).json({email, id: user.id, role: user.role, avatar: user.avatar, job: user.job_id, admin: user.admin});
         } 
         else
             res.status(400).json("invalid password");
@@ -115,4 +126,4 @@ const logout = ({res}) => {
     res.clearCookie("access_token").sendStatus(200);
 }
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout };
+module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser };
