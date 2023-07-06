@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { getAllUsers, getUser, addUser, deleteUser, editUser, register, login, logout } = require("../controller/userController.js");
+const { getAllUsers, getUser, addUser, deleteUser, editUser, register, login, logout, getCurrentUser } = require("../controller/userController.js");
 
 const { validateUserPost } = require("../validator/userValidator");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
@@ -13,5 +13,6 @@ router.get("/logout",authorize, logout);
 router.get("/:id",authorize, getUser);
 router.delete("/:id",authorize, isAdmin, deleteUser);
 router.put("/:id",authorize, editUser);
+router.get("/me", authorize, getCurrentUser);
 
 module.exports = router;
