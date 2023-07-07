@@ -13,16 +13,15 @@ const findAll = () => {
 } 
 
 const createPost = (post) => {
-    const { title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote } = post;
-    console.log('post --->', post)
+    const { title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate } = post;
 
     const formatedDeadlineDate = new Date(deadlineDate);
     const formatedMakeDecisionDate = new Date(makeDecisionDate);
     const formatedConflitDate = new Date (conflitDate);
 
     return db
-        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, deadlineDate, makeDecisionDate, conflitDate, vote) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
-        [title, description, createdDate, status, profit, risk, avatar, user_id, category, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate, vote])
+        .execute("insert into post (title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate) values (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?)",
+        [title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, formatedDeadlineDate, formatedMakeDecisionDate, formatedConflitDate])
         .then(([data]) => {
             return { id: data.insertId, ...post };
         })
@@ -45,7 +44,6 @@ const removePost = (id) => {
 } 
 
 const modifyPost = (post, id) => {
-    console.log("post", post)
     return db
         .query("update post set ? where id = ?", [post, id])
         .then(([data]) => {
@@ -144,4 +142,43 @@ const findCountPositiveAndNegativeVote = (postId) => {
     })
 }
 
-module.exports = { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote};
+const findExpertFromPost = (postId) => {
+    return db
+    .execute("select u.firstname, u.lastname, u.avatar, p.title  from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and expert= 1;", [postId])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
+
+const findImpactedFromPost = (postId) => {
+    return db
+    .execute("select u.firstname, u.lastname, u.avatar, p.title  from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and impacted= 1;", [postId])
+    .then(([data]) => {
+        return data;
+    })
+    .catch((err) =>{
+        console.error("Error ", err)
+        return err;
+    })
+}
+
+const createUserParticipant = (participant) => {
+    const { user_id, post_id, expert, impacted} = participant;
+
+    return db
+        .execute("insert into user_participant (user_id, post_id, expert, impacted) values (?, ?, ?, ?)",
+        [user_id, post_id, expert, impacted])
+        .then(([data]) => {
+            return { id: data.insertId, ...participant };
+        })
+        .catch((err) =>{
+            console.error("error", err)
+            return err;
+        })
+} 
+
+module.exports = { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant};

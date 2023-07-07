@@ -39,7 +39,6 @@ const createAlert = (alert) => {
 } 
 
 const removeAlert = (id) => {
-    console.log('id', id)
     return db
         .execute("delete from alert where id = ?", [id])
         .then(([data]) => {

@@ -11,6 +11,7 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
+  console.log("Serveur open PORT :", port)
 });
 
 module.exports = app;

@@ -62,4 +62,24 @@ const modifyUser = (user, id) => {
         })
 } 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser };
+const getByEmail = async (email) => {
+    const [data] = await db.query("SELECT * FROM user WHERE email = ?", [email]);
+    return data;
+}
+
+
+const createUserAdmin = (user) => {
+    const { firstname, lastname, email, password, avatar, job_id, role_id, admin} = user;
+    return db
+        .execute("insert into user (firstname, lastname, email, password, job_id, role_id, admin, avatar) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        [firstname, lastname, email, password, job_id, role_id, admin, avatar])
+        .then(([data]) => {
+            return { id: data.insertId, ...user };
+        })
+        .catch((err) =>{
+            console.error("err", err)
+            return err;
+        })
+} 
+
+module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin};

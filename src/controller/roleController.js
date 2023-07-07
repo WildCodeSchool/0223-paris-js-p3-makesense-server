@@ -58,7 +58,7 @@ const editRole = async (req, res) => {
     const id = req.params.id;
     
     const role = req.body;
-
+    
     try {
         const dataEditRole = await modifyRole(role, id);
         if (dataEditRole.affectedRows === 1) {
