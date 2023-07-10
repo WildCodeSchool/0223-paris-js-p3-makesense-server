@@ -4,7 +4,9 @@ const helmet = require('helmet');
 const app = express();
 const router = require('../routes/index.routes');
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
+app.use(express.static(path.join(__dirname + "/../../public")));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(

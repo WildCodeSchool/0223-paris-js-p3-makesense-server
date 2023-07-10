@@ -155,5 +155,17 @@ const resetPassword = async (req, res, next) => {
     }
 }
 
+const updateAvatar = async (req, res, next) => {
+    try {
+        if (!req.file) return res.status(400).json("a error occured during the upload");
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};
+        const uploadedFilePath = req.protocol + "://" + req.get("host") + "/upload/" + req.file.filename;
+
+        const result = await modifyUser({avatar: uploadedFilePath}, req.idUser);
+        res.status(200).json({avatar: uploadedFilePath});
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, updateAvatar};

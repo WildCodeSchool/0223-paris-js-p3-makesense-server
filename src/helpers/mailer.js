@@ -17,7 +17,7 @@ const sendResetPasswordMail = async ({ dest, url }) => {
         to: dest, // this is the address to which the email will be sent
         subject: "Changement de mot de passe : ",
         text: `Cliquez sur ce lien pour changer votre mot de passe : ${url}`, // url will be defined later in our controller
-        html: `<p>Cliquez sur ce lien pour changer votre mot de passe :  <a href=${url}>Modification du mot de passe</a>`,
+        html: `<p>Cliquez sur ce lien pour changer votre mot de passe : <a href=${url}>Modification du mot de passe</a>`,
     };
     return transporter.sendMail(mailOptions);
 };
