@@ -4,7 +4,7 @@ const { getAllUsers, getUser, addUser, deleteUser, editUser, register, login, lo
 
 const { validateUserPost } = require("../validator/userValidator");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
-const upload = require("../middlewares/fileUpload.js");
+const upload = require("../middlewares/userFileUpload.js");
 
 router.get("/",authorize, getAllUsers);
 router.get("/me", authorize, getCurrentUser);
