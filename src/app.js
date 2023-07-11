@@ -6,9 +6,9 @@ app.get("/", (req, res) => {
     res.send("Welcome");
 });
 
-app.get("*", (req, res) => {
-  res.redirect("/")
-});
+// app.get("*", (req, res) => {
+//   res.redirect("/")
+// });
 
 app.listen(port, () => {
   console.log("Serveur open PORT :", port)

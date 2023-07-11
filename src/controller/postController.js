@@ -59,7 +59,8 @@ const deletePost = async (req, res) => {
 const editPost = async (req, res) => {
     const id = req.params.id;
 
-    const post = req.body;
+    let post = req.body;
+    console.log("je suis post dans postController --->", post)
     if (post?.deadlineDate) {
         const formattedDeadlineDate = new Date(post?.deadlineDate);
         post.deadlineDate = formattedDeadlineDate;
@@ -76,6 +77,12 @@ const editPost = async (req, res) => {
     }
 
     try {
+
+        if (req.file) {
+            const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+            post.avatar = await uploadedFilePath;
+        }
+
         const dataEditPost = await modifyPost(post, id);
         if (dataEditPost.affectedRows === 1) {
             res.json({ id, ...post})
