@@ -30,9 +30,7 @@ const addUser = async (req, res) => {
     }
 }
 
-
 const getCurrentUser = async (req, res, next) => {
-    console.log(req.idUser, "getCurrentUser")
     try {
         const [user] = await findOne(req.idUser);
         res.status(200).json(user);
@@ -160,9 +158,8 @@ const updateAvatar = async (req, res, next) => {
         if (!req.file) return res.status(400).json("a error occured during the upload");
 
         const uploadedFilePath = req.protocol + "://" + req.get("host") + "/upload/" + req.file.filename;
-
         const result = await modifyUser({avatar: uploadedFilePath}, req.idUser);
-        res.status(200).json({avatar: uploadedFilePath});
+        res.status(200).json({avatar: uploadedFilePath, result});
     } catch (err) {
         next(err);
     }
