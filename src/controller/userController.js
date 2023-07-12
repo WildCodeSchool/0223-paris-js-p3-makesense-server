@@ -25,8 +25,6 @@ const addUser = async (req, res) => {
     if (user?.avatar) {
         if (!req.file) return res.status(400).json("a error occured during the upload");
         filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
-        // const result = await modifyUser({avatar: uploadedFilePath}, req.idUser);
-        // res.status(200).json({avatar: uploadedFilePath, result});
     }
     try {
         const dataAddUser = await createUser({...user, admin : false, avatar : filePath});
