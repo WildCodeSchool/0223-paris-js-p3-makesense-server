@@ -31,7 +31,6 @@ const addUser = async (req, res) => {
 
 
 const getCurrentUser = async (req, res, next) => {
-    console.log(req.idUser, "getCurrentUser")
     try {
         const [user] = await findOne(req.idUser);
         res.status(200).json(user);
