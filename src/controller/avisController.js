@@ -27,7 +27,6 @@ const addAvis = async (req, res) => {
         if (getPost.length === 0) {
             res.status(404).json({error : "No Post"});
         } else {
-            console.log("avis", avis)
             const addAlert = await createAlert(getPost);
             const newAlert = {
                 alert_id : addAlert.id,
@@ -74,7 +73,7 @@ const editAvis = async (req, res) => {
     const avis = req.body;
 
     try {
-        const dataEditAvis = await modifyRole(avis, id);
+        const dataEditAvis = await modifyAvis(avis, id);
         if (dataEditAvis.affectedRows === 1) {
             res.json({ id, ...avis})
         } else {

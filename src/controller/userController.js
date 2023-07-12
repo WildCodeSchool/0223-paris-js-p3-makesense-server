@@ -21,15 +21,19 @@ const getAllUsers = async (req, res) => {
 
 const addUser = async (req, res) => {
     const user = req.body;
+    const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
+    if (user?.avatar) {
+        if (!req.file) return res.status(400).json("a error occured during the upload");
+        filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
+    }
     try {
-        const dataAddUser = await createUser({...user, admin : false});
+        const dataAddUser = await createUser({...user, admin : false, avatar : filePath});
         res.status(201).json(dataAddUser)
     } catch (err) {
         console.log("err", err)
         res.status(500).json({error : err.message});
     }
 }
-
 
 const getCurrentUser = async (req, res, next) => {
     try {
@@ -73,6 +77,12 @@ const editUser = async  (req, res) => {
     const user = req.body;
 
     try {
+
+        if (req.file) {
+            const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
+            user.avatar = await uploadedFilePath;
+        }
+
         const dataEditUser = await modifyUser(user, id);
         if (dataEditUser.affectedRows === 1) {
             res.json({ id, ...user})
@@ -88,12 +98,17 @@ const editUser = async  (req, res) => {
 const register = async (req, res) => {
     try {
         const { lastname, firstname, email, password, avatar, job_id, role_id } = req.body;
+        const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
+        if (avatar) {
+            if (!req.file) return res.status(400).json("a error occured during the upload");
+            filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
+        }
         const user = await getByEmail(req.body.email);
         if (user.lenght === 0) return res.status(400).json("email already exists");
         req.body.password = await argon.hash(req.body.password);
-        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0"};
+        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0", avatar : filePath};
         const result = await createUserAdmin(newBody);
-        res.status(201).json({ id: result.insertId, lastname, firstname, email, password, avatar, job_id, role_id  });
+        res.status(201).json({ id: result.insertId, lastname, firstname, email, password, avatar : filePath, job_id, role_id  });
 
     } catch (err) {
         console.log("err", err)
@@ -132,7 +147,6 @@ const sendResetPassword = async (req, res, next) => {
     try {
         const resetToken = jwt.sign({ email }, process.env.JWT_AUTH_SECRET);
         const url = `${process.env.FRONTEND_URL}/resetPassword?token=${resetToken}`;
-        console.log("resetToken", resetToken)
         const result = await sendResetPasswordMail({ dest: email, url });
         res.sendStatus(200).json({result});
     } catch (error) {
@@ -153,6 +167,5 @@ const resetPassword = async (req, res, next) => {
         next(error);
     }
 }
-
 
 module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};
