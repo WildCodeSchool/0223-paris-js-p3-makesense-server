@@ -1,4 +1,4 @@
-const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail } = require("../model/userModel"); 
+const { findAll, findOne, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail } = require("../model/userModel"); 
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
 const {sendResetPasswordMail} = require("../helpers/mailer");
@@ -13,22 +13,6 @@ const getAllUsers = async (req, res) => {
             res.status(404).json({error : "No users"});
         }
 
-    } catch (err) {
-        console.log("err", err)
-        res.status(500).json({error : err.message});
-    }
-}
-
-const addUser = async (req, res) => {
-    const user = req.body;
-    const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
-    if (user?.avatar) {
-        if (!req.file) return res.status(400).json("a error occured during the upload");
-        filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
-    }
-    try {
-        const dataAddUser = await createUser({...user, admin : false, avatar : filePath});
-        res.status(201).json(dataAddUser)
     } catch (err) {
         console.log("err", err)
         res.status(500).json({error : err.message});
@@ -168,4 +152,4 @@ const resetPassword = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};
+module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};

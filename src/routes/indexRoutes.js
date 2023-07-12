@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const userRouter = require("./users.routes.js");
-const postRouter = require("./posts.routes.js");
-const jobRouter = require("./jobs.routes.js");
-const roleRouter = require("./roles.routes.js");
-const alertRouter = require("./alerts.routes.js");
-const avisRouter = require("./avis.routes.js");
+const userRouter = require("./usersRoutes.js");
+const postRouter = require("./postsRoutes.js");
+const jobRouter = require("./jobsRoutes.js");
+const roleRouter = require("./rolesRoutes.js");
+const alertRouter = require("./alertsRoutes.js");
+const avisRouter = require("./avisRoutes.js");
 
 router.use('/users', userRouter);
 router.use('/posts', postRouter);
