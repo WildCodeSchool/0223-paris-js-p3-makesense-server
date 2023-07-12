@@ -11,7 +11,6 @@ const transporter = mailer.createTransport({
 });
 
 const sendResetPasswordMail = async ({ dest, url }) => {
-    console.log('url', url)
     const mailOptions = {
         from: "support@makesense.org", // this is the address from which the email will be sent
         to: dest, // this is the address to which the email will be sent

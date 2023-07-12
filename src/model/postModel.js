@@ -44,7 +44,6 @@ const removePost = (id) => {
 } 
 
 const modifyPost = (post, id) => {
-    console.log("je suis dans le model de post  :) ", post)
     return db
         .query("update post set ? where id = ?", [post, id])
         .then(([data]) => {

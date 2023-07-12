@@ -101,7 +101,6 @@ const register = async (req, res) => {
     try {
         const { lastname, firstname, email, password, avatar, job_id, role_id } = req.body;
         const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
-        console.log("avatar", avatar);
         if (avatar) {
             if (!req.file) return res.status(400).json("a error occured during the upload");
             filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
@@ -150,7 +149,6 @@ const sendResetPassword = async (req, res, next) => {
     try {
         const resetToken = jwt.sign({ email }, process.env.JWT_AUTH_SECRET);
         const url = `${process.env.FRONTEND_URL}/resetPassword?token=${resetToken}`;
-        console.log("resetToken", resetToken)
         const result = await sendResetPasswordMail({ dest: email, url });
         res.sendStatus(200).json({result});
     } catch (error) {

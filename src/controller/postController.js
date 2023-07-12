@@ -22,7 +22,12 @@ const addPost = async (req, res) => {
     const createdDate = new Date();
 
     try {
-        const dataAddUser = await createPost({...post, createdDate});
+        const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
+        if (post.avatar) {
+            if (!req.file) return res.status(400).json("a error occured during the upload");
+            filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+        }
+        const dataAddUser = await createPost({...post, createdDate, avatar : filePath});
         res.status(201).json(dataAddUser)
     } catch (err) {
         console.log("err", err)
