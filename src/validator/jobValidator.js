@@ -1,4 +1,4 @@
-const validateTag = (req, res, next) => {
+const validateJob = (req, res, next) => {
     const { name } = req.body;
     const errors = [];
 
@@ -13,4 +13,4 @@ const validateTag = (req, res, next) => {
     }
 }
 
-module.exports = { validateTag };
+module.exports = { validateJob };
