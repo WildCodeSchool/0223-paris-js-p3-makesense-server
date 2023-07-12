@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const { getAllRoles, getRole, addRole, deleteRole, editRole } = require("../controller/roleController.js");
 
-const { validateRoleName } = require("../validator/roleValidator");
+const { validateRoleName } = require("../validator/roleValidator.js");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
 
 

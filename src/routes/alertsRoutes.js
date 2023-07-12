@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const { getAllAlerts, getAlert, addAlert, deleteAlert, editAlert, getAlertByUserID } = require("../controller/alertController.js");
 
-const { validateAlert } = require("../validator/alertValidator");
+const { validateAlert } = require("../validator/alertValidator.js");
 const {authorize} = require("../middlewares/auth.js");
 
 router.get("/", authorize, getAllAlerts);
