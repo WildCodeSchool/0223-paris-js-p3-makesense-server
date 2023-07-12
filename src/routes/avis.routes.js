@@ -3,7 +3,7 @@ const router = require("express").Router();
 const { getAllAvis, getAvis, addAvis, deleteAvis, editAvis, getAvisFromUser, countAvis, getAllAvisFromPost  } = require("../controller/avisController.js");
 
 const { validateAvisPost } = require("../validator/avisValidator");
-const {authorize, isAdmin} = require("../middlewares/auth.js")
+const {authorize, isAdmin} = require("../middlewares/auth.js");
 
 router.get("/",authorize, getAllAvis);
 router.post("/",authorize, validateAvisPost, addAvis);
