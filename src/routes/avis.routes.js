@@ -11,7 +11,7 @@ router.get("/:id",authorize, getAvis);
 router.get("/frompost/:count",authorize, countAvis);
 router.get("/avisfrompost/:id",authorize, getAllAvisFromPost);
 router.get("/fromuser/:id",authorize, getAvisFromUser);
-router.delete("/:id",authorize, deleteAvis);
+router.delete("/:id",authorize, isAdmin, deleteAvis);
 router.put("/:id",authorize, editAvis);
 
 module.exports = router;
