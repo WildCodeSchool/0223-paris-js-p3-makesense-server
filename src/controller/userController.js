@@ -1,6 +1,7 @@
-const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail, createUserAdmin } = require("../model/userModel"); 
+const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail } = require("../model/userModel"); 
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
+const {sendResetPasswordMail} = require("../helpers/mailer");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -125,4 +126,33 @@ const logout = ({res}) => {
     res.clearCookie("access_token").sendStatus(200);
 }
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser };
+const sendResetPassword = async (req, res, next) => {
+    const { email } = req.body;
+
+    try {
+        const resetToken = jwt.sign({ email }, process.env.JWT_AUTH_SECRET);
+        const url = `${process.env.FRONTEND_URL}/resetPassword?token=${resetToken}`;
+        console.log("resetToken", resetToken)
+        const result = await sendResetPasswordMail({ dest: email, url });
+        res.sendStatus(200).json({result});
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+const resetPassword = async (req, res, next) => {
+    const { token, password } = req.body;
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_AUTH_SECRET);
+        const hash = await argon.hash(password);
+        await updateOneByMail({password: hash}, decoded.email);
+        res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};
