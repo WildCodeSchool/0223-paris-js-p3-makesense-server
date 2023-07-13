@@ -65,7 +65,7 @@ const editPost = async (req, res) => {
     const id = req.params.id;
 
     let post = req.body;
-    console.log("je suis post dans postController --->", post)
+    
     if (post?.deadlineDate) {
         const formattedDeadlineDate = new Date(post?.deadlineDate);
         post.deadlineDate = formattedDeadlineDate;
