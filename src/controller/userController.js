@@ -35,7 +35,7 @@ const getCurrentUser = async (req, res, next) => {
         const [user] = await findOne(req.idUser);
         res.status(200).json(user);
     } catch (err) {
-        next(err);
+        next(err); 
     }
 }
 
