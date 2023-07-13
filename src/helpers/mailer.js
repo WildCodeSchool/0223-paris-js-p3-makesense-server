@@ -12,15 +12,27 @@ const transporter = mailer.createTransport({
 
 const sendResetPasswordMail = async ({ dest, url }) => {
     const mailOptions = {
-        from: "support@makesense.org", // this is the address from which the email will be sent
-        to: dest, // this is the address to which the email will be sent
+        from: "support@makesense.org",
+        to: dest,
         subject: "Changement de mot de passe : ",
-        text: `Cliquez sur ce lien pour changer votre mot de passe : ${url}`, // url will be defined later in our controller
+        text: `Cliquez sur ce lien pour changer votre mot de passe : ${url}`,
         html: `<p>Cliquez sur ce lien pour changer votre mot de passe : <a href=${url}>Modification du mot de passe</a>`,
+    };
+    return transporter.sendMail(mailOptions);
+};
+
+const createAccountMail = async ({ email, password }) => {
+    const mailOptions = {
+        from: "support@makesense.org",
+        to: email,
+        subject: "Votre compte Makesense : ",
+        text: `Les informations de connexion de votre compte makesense : \n E-mail : ${email} \n Mot de passe : ${password}`,
+        html: `<p>Les informations de connexion de votre compte makesense : </br> E-mail : ${email} </br> Mot de passe : ${password}</p>`,
     };
     return transporter.sendMail(mailOptions);
 };
 
 module.exports = {
     sendResetPasswordMail,
+    createAccountMail,
 }
