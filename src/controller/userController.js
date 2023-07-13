@@ -1,7 +1,7 @@
 const { findAll, findOne, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail } = require("../model/userModel"); 
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
-const {sendResetPasswordMail} = require("../helpers/mailer");
+const {sendResetPasswordMail, createAccountMail} = require("../helpers/mailer");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -81,24 +81,23 @@ const editUser = async  (req, res) => {
  
 const register = async (req, res) => {
     try {
-        const { lastname, firstname, email, password, avatar, job_id, role_id } = req.body;
+        const { lastname, firstname, email, avatar, job_id, role_id } = req.body;
+        const { password } = req; 
         const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
         if (avatar) {
             if (!req.file) return res.status(400).json("a error occured during the upload");
             filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
         }
-        const user = await getByEmail(req.body.email);
-        if (user.lenght === 0) return res.status(400).json("email already exists");
-        req.body.password = await argon.hash(req.body.password);
-        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0", avatar : filePath};
+        const user = await getByEmail(email);
+        if (user.length !== 0)  return res.status(400).json("email already exists");
+        req.password = await argon.hash(password);
+        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0", avatar : filePath, password : req.password};
         const result = await createUserAdmin(newBody);
-        res.status(201).json({ id: result.insertId, lastname, firstname, email, password, avatar : filePath, job_id, role_id  });
-
+        const sendMailAccount = await createAccountMail({ email, password });
+        res.status(201).json({ id: result.insertId, lastname, firstname, email, avatar : filePath, job_id, role_id, sendMailAccount}); 
     } catch (err) {
-        console.log("err", err)
-        res.status(500).json({error : err.message});
+        console.log('err', err)
     }
-
 }
 
 const login = async (req, res) => {
