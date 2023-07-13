@@ -22,10 +22,6 @@ const validatePost = (req, res, next) => {
         errors.push({ field : "risk", message : "This risk is required"})
     }
 
-    if (avatar == null || avatar === "") {
-        errors.push({ field : "avatar", message : "This avatar is required"})
-    }
-
     if (errors.length) {
         res.status(422).json({ validationErrors: errors });
     } else {

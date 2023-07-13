@@ -1,6 +1,7 @@
-const { findAll, findOne, createUser, removeUser, modifyUser, getByEmail, createUserAdmin } = require("../model/userModel"); 
+const { findAll, findOne, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail } = require("../model/userModel"); 
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
+const {sendResetPasswordMail, createAccountMail} = require("../helpers/mailer");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -17,18 +18,6 @@ const getAllUsers = async (req, res) => {
         res.status(500).json({error : err.message});
     }
 }
-
-const addUser = async (req, res) => {
-    const user = req.body;
-    try {
-        const dataAddUser = await createUser({...user, admin : false});
-        res.status(201).json(dataAddUser)
-    } catch (err) {
-        console.log("err", err)
-        res.status(500).json({error : err.message});
-    }
-}
-
 
 const getCurrentUser = async (req, res, next) => {
     try {
@@ -72,6 +61,12 @@ const editUser = async  (req, res) => {
     const user = req.body;
 
     try {
+
+        if (req.file) {
+            const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
+            user.avatar = await uploadedFilePath;
+        }
+
         const dataEditUser = await modifyUser(user, id);
         if (dataEditUser.affectedRows === 1) {
             res.json({ id, ...user})
@@ -86,19 +81,23 @@ const editUser = async  (req, res) => {
  
 const register = async (req, res) => {
     try {
-        const { lastname, firstname, email, password, avatar, job_id, role_id } = req.body;
-        const user = await getByEmail(req.body.email);
-        if (user.lenght === 0) return res.status(400).json("email already exists");
-        req.body.password = await argon.hash(req.body.password);
-        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0"};
+        const { lastname, firstname, email, avatar, job_id, role_id } = req.body;
+        const { password } = req; 
+        const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
+        if (avatar) {
+            if (!req.file) return res.status(400).json("a error occured during the upload");
+            filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
+        }
+        const user = await getByEmail(email);
+        if (user.length !== 0)  return res.status(400).json("email already exists");
+        req.password = await argon.hash(password);
+        const newBody = {...req.body, admin: req.body?.admin ? req.body.admin : "0", avatar : filePath, password : req.password};
         const result = await createUserAdmin(newBody);
-        res.status(201).json({ id: result.insertId, lastname, firstname, email, password, avatar, job_id, role_id  });
-
+        const sendMailAccount = await createAccountMail({ email, password });
+        res.status(201).json({ id: result.insertId, lastname, firstname, email, avatar : filePath, job_id, role_id, sendMailAccount}); 
     } catch (err) {
-        console.log("err", err)
-        res.status(500).json({error : err.message});
+        console.log('err', err)
     }
-
 }
 
 const login = async (req, res) => {
@@ -125,4 +124,31 @@ const logout = ({res}) => {
     res.clearCookie("access_token").sendStatus(200);
 }
 
-module.exports = { getAllUsers, getUser, addUser, deleteUser, editUser, register,login, logout, getCurrentUser };
+const sendResetPassword = async (req, res, next) => {
+    const { email } = req.body;
+
+    try {
+        const resetToken = jwt.sign({ email }, process.env.JWT_AUTH_SECRET);
+        const url = `${process.env.FRONTEND_URL}/resetPassword?token=${resetToken}`;
+        const result = await sendResetPasswordMail({ dest: email, url });
+        res.sendStatus(200).json({result});
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+const resetPassword = async (req, res, next) => {
+    const { token, password } = req.body;
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_AUTH_SECRET);
+        const hash = await argon.hash(password);
+        await updateOneByMail({password: hash}, decoded.email);
+        res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};

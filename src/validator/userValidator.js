@@ -1,5 +1,6 @@
 const validateUserPost = (req, res, next) => {
-    const { firstname, lastname, email, password, role_id, job_id } = req.body;
+    const { firstname, lastname, email, role_id, job_id } = req.body;
+    const { password } = req;
     const errors = [];
 
     if (firstname == null || firstname === "") {
@@ -24,12 +25,6 @@ const validateUserPost = (req, res, next) => {
 
     if (email == null || email === "") {
         errors.push({ field : "email", message : "This email is required"})
-    }
-
-    const emailRegex = /[a-z0-9._]+@makesense.org/;
-
-    if (!emailRegex.test(email)) {
-        errors.push({ field : "email", message : "Invalid Email"})
     }
     
     if (password == null || password === "") {

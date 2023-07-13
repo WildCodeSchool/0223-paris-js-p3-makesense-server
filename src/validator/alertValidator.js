@@ -1,5 +1,5 @@
 const validateAlert = (req, res, next) => {
-    const { title , text } = req.body;
+    const { title } = req.body;
     const errors = [];
 
     if (title == null || title === "") {
