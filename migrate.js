@@ -22,11 +22,9 @@ const migrate = async () => {
     await connection.query(sql);
 
     const role = [
-        { name : "Role1"},
-        { name : "Role2"},
-        { name : "Role3"},
-        { name : "Role4"},
-        { name : "Role5"},
+        { name : "Décisionnaire"},
+        { name : "Employer"},
+        { name : "Bénévole"},
     ];
 
   for (let i = 0; i < role.length; i++) {
@@ -38,11 +36,15 @@ const migrate = async () => {
   await console.log(`Total Role : ${role.length}`);
 
   const job = [
-    { name : "Job1"},
-    { name : "Job2"},
-    { name : "Job3"},
-    { name : "Job4"},
-    { name : "Job5"},
+    { name : "Directeur Associatif"},
+    { name : "Directeur Général "},
+    { name : "Service Civique"},
+    { name : "RH"},
+    { name : "Développeur"},
+    { name : "Technicien"},
+    { name : "Commercial"},
+    { name : "Brand Manager"},
+    {name : "Design Director"}
   ];
 
   for (let i = 0; i < job.length; i++) {
@@ -57,12 +59,12 @@ const migrate = async () => {
     {
         "firstname": "Alexandre",
         "lastname": "Renard",
-        "email": "alexandre@makesense.org",
+        "email": "alexandre.renard98@gmail.com",
         "password": "alex",
         "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
         "tel": "07 11 38 49 57",
-        "job_id": "1",
+        "job_id": "5",
         "admin" : "1",
         "role_id": "1"
     },
@@ -74,9 +76,9 @@ const migrate = async () => {
         "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
         "tel": "06 32 58 67 84",
-        "job_id": "2",
+        "job_id": "5",
         "admin" : "1",
-        "role_id": "2"
+        "role_id": "1"
     },
     {
         "firstname": "Thomas",
@@ -86,9 +88,9 @@ const migrate = async () => {
         "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
         "tel": "06 74 62 31 99",
-        "job_id": "3",
+        "job_id": "5",
         "admin" : "1",
-        "role_id": "3"
+        "role_id": "1"
     },
     {
         "firstname": "Jean-Maxime",
@@ -98,9 +100,9 @@ const migrate = async () => {
         "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
         "tel": "07 41 39 99 75",
-        "job_id": "4",
+        "job_id": "5",
         "admin" : "1",
-        "role_id": "4"
+        "role_id": "1"
     },
     {
         "firstname": "Kader",
@@ -112,20 +114,92 @@ const migrate = async () => {
         "tel": "06 12 97 34 56",
         "job_id": "5",
         "admin" : "1",
-        "role_id": "5"
+        "role_id": "1"
     },
     {
       "firstname": "John",
       "lastname": "Doe",
-      "email": "user@makesense.org",
+      "email": "john@makesense.org",
       "password": "user",
       "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
       "affiliated_site": "France",
       "tel": "06 74 62 31 99",
-      "job_id": "5",
+      "job_id": "7",
       "admin" : "0",
-      "role_id": "5"
-  }
+      "role_id": "3"
+  },
+  {
+    "firstname": "Christian",
+    "lastname": "Vanizette",
+    "email": "christianvanizette@makesense.org",
+    "password": "christian",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "2",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "Christian",
+    "lastname": "Vanizette",
+    "email": "christianvanizette@makesense.org",
+    "password": "christian",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "2",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "admin",
+    "lastname": "admin",
+    "email": "christianvanizette@makesense.org",
+    "password": "admin",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "6",
+    "admin" : "1",
+    "role_id": "3"
+  },
+  {
+    "firstname": "Sandrine",
+    "lastname": "Maitre",
+    "email": "sndrinemaitre@makesense.org",
+    "password": "sandrine",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "4",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "Daniel",
+    "lastname": "Buendía",
+    "email": "danielbuendía@makesense.org",
+    "password": "daniel",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "8",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "Luis",
+    "lastname": "David Araiza",
+    "email": "luisdavidaraiza@makesense.org",
+    "password": "daniel",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "Mexico",
+    "tel": "06 74 62 31 99",
+    "job_id": "9",
+    "admin" : "0",
+    "role_id": "2"
+  },
   ];
 
   for (let i = 0; i < user.length; i++) {
@@ -133,7 +207,7 @@ const migrate = async () => {
     const hash = await argon2.hash(password);
     await connection.query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [firstname, lastname, email, hash, avatar, affiliated_site, tel, job_id, role_id, admin]);
-    await console.log(`Add user : ${firstname}`);
+    await console.log(`Add user : ${firstname} ${lastname}`);
   }
 
   await console.log(`Total User : ${user.length}`);
