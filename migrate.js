@@ -57,7 +57,7 @@ const migrate = async () => {
     {
         "firstname": "Alexandre",
         "lastname": "Renard",
-        "email": "alexandre@makesense.org",
+        "email": "alexandre.renard98@gmail.com.",
         "password": "alex",
         "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
