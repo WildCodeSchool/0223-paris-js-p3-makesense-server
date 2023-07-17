@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 const findAll = () => {
     return db
-        .query("select * from user")
+        .query("select user.*, job.name as job, role.name as role from user join job on user.job_id = job.id join role on user.role_id = role.id")
         .then(([data]) => {
             return data;
         })

@@ -80,12 +80,14 @@ const editUser = async  (req, res) => {
 }
  
 const register = async (req, res) => {
+
+    console.log("req.body", req.body);
     try {
         const { lastname, firstname, email, avatar, job_id, role_id } = req.body;
         const { password } = req; 
         const filePath = `${process.env.BACKEND_URL}/upload/user/default_user.png`;
         if (avatar) {
-            if (!req.file) return res.status(400).json("a error occured during the upload");
+            if (!req.file) return res.status(403).json("a error occured during the upload");
             filePath = req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
         }
         const user = await getByEmail(email);
