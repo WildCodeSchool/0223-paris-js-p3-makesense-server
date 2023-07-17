@@ -22,7 +22,12 @@ const addPost = async (req, res) => {
     const createdDate = new Date();
 
     try {
-        const dataAddUser = await createPost({...post, createdDate});
+        const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
+        if (post.avatar) {
+            if (!req.file) return res.status(400).json("a error occured during the upload");
+            filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+        }
+        const dataAddUser = await createPost({...post, createdDate, avatar : filePath});
         res.status(201).json(dataAddUser)
     } catch (err) {
         console.log("err", err)
@@ -59,7 +64,8 @@ const deletePost = async (req, res) => {
 const editPost = async (req, res) => {
     const id = req.params.id;
 
-    const post = req.body;
+    let post = req.body;
+    
     if (post?.deadlineDate) {
         const formattedDeadlineDate = new Date(post?.deadlineDate);
         post.deadlineDate = formattedDeadlineDate;
@@ -76,6 +82,12 @@ const editPost = async (req, res) => {
     }
 
     try {
+
+        if (req.file) {
+            const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+            post.avatar = await uploadedFilePath;
+        }
+
         const dataEditPost = await modifyPost(post, id);
         if (dataEditPost.affectedRows === 1) {
             res.json({ id, ...post})

@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 const findAll = () => {
     return db
-        .query("select * from user")
+        .query("select user.*, job.name as job, role.name as role from user join job on user.job_id = job.id join role on user.role_id = role.id")
         .then(([data]) => {
             return data;
         })
@@ -67,6 +67,10 @@ const getByEmail = async (email) => {
     return data;
 }
 
+const updateOneByMail = async (user, email) => {
+    return db.query("UPDATE user SET ? WHERE email = ?", [user, email])
+}
+
 
 const createUserAdmin = (user) => {
     const { firstname, lastname, email, password, avatar, job_id, role_id, admin} = user;
@@ -82,4 +86,4 @@ const createUserAdmin = (user) => {
         })
 } 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin};
+module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin, updateOneByMail};

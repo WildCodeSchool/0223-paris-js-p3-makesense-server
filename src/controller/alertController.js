@@ -62,7 +62,6 @@ const getAlert = async (req, res) => {
 
 const deleteAlert = async (req, res) => {
     const id = req.params.id;
-    // console.log("id", id)
     try {
         const dataDeleteAlert = await removeAlert(id);
         if (dataDeleteAlert.affectedRows === 1) {
@@ -81,8 +80,6 @@ const editAlert = async (req, res) => {
 
     const alert = req.body;
 
-    console.log("id", id);
-    console.log("alert", alert)
     try {
         const dataEditRole = await modifyAlert(alert, id);
         if (dataEditRole.affectedRows === 1) {

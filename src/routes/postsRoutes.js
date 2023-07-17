@@ -4,12 +4,13 @@ const { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser,get
 
 const { validatePost } = require("../validator/postValidator.js");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
+const upload = require("../middlewares/postFileUpload.js");
 
 router.get("/",authorize, getAllPosts);
 router.post("/",authorize, validatePost, addPost);
 router.get("/:id",authorize, getPost);
-router.delete("/:id",authorize, deletePost);
-router.put("/:id",authorize, editPost);
+router.delete("/:id",authorize, isAdmin, deletePost);
+router.put("/:id",authorize, upload.single("avatar"), editPost);
 router.get("/votes/fromuser/:id",authorize, getVoteFromUser);
 router.get("/votes/frompost/:id",authorize, getVoteFromPost);
 router.post("/votes",authorize, addVote);

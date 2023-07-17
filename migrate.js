@@ -22,11 +22,9 @@ const migrate = async () => {
     await connection.query(sql);
 
     const role = [
-        { name : "Role1"},
-        { name : "Role2"},
-        { name : "Role3"},
-        { name : "Role4"},
-        { name : "Role5"},
+        { name : "Décisionnaire"},
+        { name : "Employer"},
+        { name : "Bénévole"},
     ];
 
   for (let i = 0; i < role.length; i++) {
@@ -38,11 +36,15 @@ const migrate = async () => {
   await console.log(`Total Role : ${role.length}`);
 
   const job = [
-    { name : "Job1"},
-    { name : "Job2"},
-    { name : "Job3"},
-    { name : "Job4"},
-    { name : "Job5"},
+    { name : "Directeur Associatif"},
+    { name : "Directeur Général "},
+    { name : "Service Civique"},
+    { name : "RH"},
+    { name : "Développeur"},
+    { name : "Technicien"},
+    { name : "Commercial"},
+    { name : "Brand Manager"},
+    {name : "Design Director"}
   ];
 
   for (let i = 0; i < job.length; i++) {
@@ -56,76 +58,148 @@ const migrate = async () => {
   const user = [
     {
         "firstname": "Alexandre",
-        "lastname": "dzegrthyj",
-        "email": "alexandre@makesense.org",
+        "lastname": "Renard",
+        "email": "alexandre.renard98@gmail.com",
         "password": "alex",
-        "avatar": "eeee",
+        "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
-        "tel": "1",
-        "job_id": "1",
+        "tel": "07 11 38 49 57",
+        "job_id": "5",
         "admin" : "1",
         "role_id": "1"
     },
     {
         "firstname": "Etienne",
-        "lastname": "dsljdksd",
+        "lastname": "Chamarier",
         "email": "etienne@makesense.org",
         "password": "etienne",
-        "avatar": "eeee",
+        "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
-        "tel": "1",
-        "job_id": "2",
+        "tel": "06 32 58 67 84",
+        "job_id": "5",
         "admin" : "1",
-        "role_id": "2"
+        "role_id": "1"
     },
     {
         "firstname": "Thomas",
-        "lastname": "lqs,ls,d,dslds,",
-        "email": "thomas@makesense.com",
+        "lastname": "Fachinetti",
+        "email": "thomas@makesense.org",
         "password": "thomas",
-        "avatar": "eeee",
+        "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
-        "tel": "1",
-        "job_id": "3",
+        "tel": "06 74 62 31 99",
+        "job_id": "5",
         "admin" : "1",
-        "role_id": "3"
+        "role_id": "1"
     },
     {
         "firstname": "Jean-Maxime",
-        "lastname": "sdfghhgfd",
+        "lastname": "Djnt",
         "email": "jean-maxime@makesense.org",
         "password": "jean-maxime",
-        "avatar": "eeee",
+        "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
-        "tel": "1",
-        "job_id": "4",
+        "tel": "07 41 39 99 75",
+        "job_id": "5",
         "admin" : "1",
-        "role_id": "4"
+        "role_id": "1"
     },
     {
         "firstname": "Kader",
-        "lastname": "azertyjujytgrfe",
+        "lastname": "Benderdouche",
         "email": "kader@makesense.org",
         "password": "kader",
-        "avatar": "eeee",
+        "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
         "affiliated_site": "France",
-        "tel": "1",
+        "tel": "06 12 97 34 56",
         "job_id": "5",
         "admin" : "1",
-        "role_id": "5"
+        "role_id": "1"
     },
     {
-      "firstname": "User",
-      "lastname": "azertyjujytgrfe",
-      "email": "user@makesense.org",
+      "firstname": "John",
+      "lastname": "Doe",
+      "email": "john@makesense.org",
       "password": "user",
-      "avatar": "eeee",
+      "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
       "affiliated_site": "France",
-      "tel": "1",
-      "job_id": "5",
+      "tel": "06 74 62 31 99",
+      "job_id": "7",
       "admin" : "0",
-      "role_id": "5"
-  }
+      "role_id": "3"
+  },
+  {
+    "firstname": "Christian",
+    "lastname": "Vanizette",
+    "email": "christianvanizette@makesense.org",
+    "password": "christian",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "2",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "Christian",
+    "lastname": "Vanizette",
+    "email": "christianvanizette@makesense.org",
+    "password": "christian",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "2",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "admin",
+    "lastname": "admin",
+    "email": "christianvanizette@makesense.org",
+    "password": "admin",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "6",
+    "admin" : "1",
+    "role_id": "3"
+  },
+  {
+    "firstname": "Sandrine",
+    "lastname": "Maitre",
+    "email": "sndrinemaitre@makesense.org",
+    "password": "sandrine",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "4",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "Daniel",
+    "lastname": "Buendía",
+    "email": "danielbuendía@makesense.org",
+    "password": "daniel",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "France",
+    "tel": "06 74 62 31 99",
+    "job_id": "8",
+    "admin" : "0",
+    "role_id": "2"
+  },
+  {
+    "firstname": "Luis",
+    "lastname": "David Araiza",
+    "email": "luisdavidaraiza@makesense.org",
+    "password": "daniel",
+    "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+    "affiliated_site": "Mexico",
+    "tel": "06 74 62 31 99",
+    "job_id": "9",
+    "admin" : "0",
+    "role_id": "2"
+  },
   ];
 
   for (let i = 0; i < user.length; i++) {
@@ -133,7 +207,7 @@ const migrate = async () => {
     const hash = await argon2.hash(password);
     await connection.query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [firstname, lastname, email, hash, avatar, affiliated_site, tel, job_id, role_id, admin]);
-    await console.log(`Add user : ${firstname}`);
+    await console.log(`Add user : ${firstname} ${lastname}`);
   }
 
   await console.log(`Total User : ${user.length}`);
@@ -146,7 +220,7 @@ const migrate = async () => {
         "status": "encours",
         "profit": "maxtune",
         "risk": "pasdetune",
-        "avatar": "n",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
         "user_id": "1",
         "location": "France",
         "impact": "impacte",
@@ -161,7 +235,7 @@ const migrate = async () => {
         "status": "encours",
         "profit": "maxtune",
         "risk": "pasdetune",
-        "avatar": "n",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
         "user_id": "2",
         "location": "France",
         "impact": "impacte",
@@ -176,13 +250,148 @@ const migrate = async () => {
         "status": "encours",
         "profit": "maxtune",
         "risk": "pasdetune",
-        "avatar": "n",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
         "user_id": "3",
-        "location": "France",
+        "location": "Australie",
         "impact": "impacte",
         "deadlineDate":"2023-06-21T12:01:38.000",
         "makeDecisionDate": "2023-06-21T12:01:18.000",
         "conflitDate": "2023-06-21T15:01:55.000"
+    },
+    {
+        "title": "Post 4 !",
+        "description": "Post 1 description !",
+        "createdDate": "2023-07-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "3",
+        "location": "France",
+        "impact": "impacte",
+        "deadlineDate":"2023-08-21T12:01:38.000",
+        "makeDecisionDate": "2023-08-21T12:01:18.000",
+        "conflitDate": "2023-08-21T15:01:55.000"
+    },
+    {
+        "title": "Post 5 !",
+        "description": "Post 2 description !",
+        "createdDate": "2023-07-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "4",
+        "location": "Espagne",
+        "impact": "impacte",
+        "deadlineDate":"2023-08-21T12:01:38.000",
+        "makeDecisionDate": "2023-08-21T12:01:18.000",
+        "conflitDate": "2023-08-21T15:01:55.000"
+    },
+    {
+        "title": "Post 6 !",
+        "description": "Post 3 description !",
+        "createdDate": "2023-07-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "5",
+        "location": "France",
+        "impact": "impacte",
+        "deadlineDate":"2023-08-21T12:01:38.000",
+        "makeDecisionDate": "2023-08-21T12:01:18.000",
+        "conflitDate": "2023-08-21T15:01:55.000"
+    },
+    {
+        "title": "Post 7 !",
+        "description": "Post 1 description !",
+        "createdDate": "2023-06-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "1",
+        "location": "France",
+        "impact": "impacte",
+        "deadlineDate":"2023-09-21T12:01:38.000",
+        "makeDecisionDate": "2023-09-21T12:01:18.000",
+        "conflitDate": "2023-09-21T15:01:55.000"
+    },
+    {
+        "title": "Post 8 !",
+        "description": "Post 2 description !",
+        "createdDate": "2023-06-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "2",
+        "location": "France",
+        "impact": "impacte",
+        "deadlineDate":"2023-09-21T12:01:38.000",
+        "makeDecisionDate": "2023-09-21T12:01:18.000",
+        "conflitDate": "2023-09-21T15:01:55.000"
+    },
+    {
+        "title": "Post 9 !",
+        "description": "Post 3 description !",
+        "createdDate": "2023-06-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "3",
+        "location": "Australie",
+        "impact": "impacte",
+        "deadlineDate":"2023-09-21T12:01:38.000",
+        "makeDecisionDate": "2023-09-21T12:01:18.000",
+        "conflitDate": "2023-09-21T15:01:55.000"
+    },
+    {
+        "title": "Post 10 !",
+        "description": "Post 1 description !",
+        "createdDate": "2023-07-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "3",
+        "location": "France",
+        "impact": "impacte",
+        "deadlineDate":"2023-09-21T12:01:38.000",
+        "makeDecisionDate": "2023-09-21T12:01:18.000",
+        "conflitDate": "2023-09-21T15:01:55.000"
+    },
+    {
+        "title": "Post 11 !",
+        "description": "Post 2 description !",
+        "createdDate": "2023-07-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "4",
+        "location": "Espagne",
+        "impact": "impacte",
+        "deadlineDate":"2023-10-21T12:01:38.000",
+        "makeDecisionDate": "2023-10-21T12:01:18.000",
+        "conflitDate": "2023-10-21T15:01:55.000"
+    },
+    {
+        "title": "Post 12 !",
+        "description": "Post 3 description !",
+        "createdDate": "2023-07-21T12:01:38.000",
+        "status": "encours",
+        "profit": "maxtune",
+        "risk": "pasdetune",
+        "avatar": `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`,
+        "user_id": "5",
+        "location": "France",
+        "impact": "impacte",
+        "deadlineDate":"2023-10-21T12:01:38.000",
+        "makeDecisionDate": "2023-10-21T12:01:18.000",
+        "conflitDate": "2023-10-21T15:01:55.000"
     },
   ];
 
