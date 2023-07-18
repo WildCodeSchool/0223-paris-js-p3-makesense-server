@@ -86,4 +86,17 @@ const createUserAdmin = (user) => {
         })
 } 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin, updateOneByMail};
+const findAllUserByJobId = (id) => {
+    return db
+        .execute("select * from user where job_id = ?", [id])
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+} 
+
+
+module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin, updateOneByMail, findAllUserByJobId };

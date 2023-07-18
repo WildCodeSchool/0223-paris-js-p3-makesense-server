@@ -7,7 +7,8 @@ const { validateJob } = require("../validator/jobValidator.js");
 router.get("/",authorize, getAllJobs);
 router.post("/",authorize, isAdmin, validateJob, addJob);
 router.get("/:id",authorize, getJob);
-router.delete("/:id",authorize, isAdmin, deleteJob);
+// router.delete("/:id",authorize, isAdmin, deleteJob);
+router.delete("/:id", deleteJob);
 router.put("/:id",authorize, isAdmin, editJob);
 
 module.exports = router;
