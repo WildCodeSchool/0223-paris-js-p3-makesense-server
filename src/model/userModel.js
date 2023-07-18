@@ -98,5 +98,17 @@ const findAllUserByJobId = (id) => {
         })
 } 
 
+const findAllUserByRoleId = (id) => {
+    return db
+        .execute("select * from user where role_id = ?", [id])
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+} 
 
-module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin, updateOneByMail, findAllUserByJobId };
+
+module.exports = { findAll, findOne, createUser, removeUser, modifyUser,getByEmail, createUserAdmin, updateOneByMail, findAllUserByJobId, findAllUserByRoleId };

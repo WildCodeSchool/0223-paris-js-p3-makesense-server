@@ -43,8 +43,8 @@ const getJob = async (req, res) => {
 const deleteJob = async (req, res) => {
     try {
         const id = req.params.id;
-        const searchAllUserByid = await findAllUserByJobId(id);
-        if (searchAllUserByid.length != 0) return res.status(401).json({ message : "error there are still users who have this job"});
+        const searchAllUserByJobid = await findAllUserByJobId(id);
+        if (searchAllUserByJobid.length != 0) return res.status(401).json({ message : "error there are still users who have this job"});
         const dataDeleteJob = await removeJob(id);
         if (dataDeleteJob.affectedRows === 1) {
             res.sendStatus(204);
