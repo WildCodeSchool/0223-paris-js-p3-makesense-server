@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 const findAll = () => {
     return db
-        .query("select post.*, user.lastname, user.firstname ,user.avatar from post join user on post.user_id = user.id")
+        .query("select post.*, user.lastname, user.firstname ,user.avatar as photo from post join user on post.user_id = user.id")
         .then(([data]) => {
             return data;
         })
@@ -57,7 +57,7 @@ const modifyPost = (post, id) => {
 
 const findOnePost = (id) => {
     return db
-        .execute("select * from post where id = ?", [id])
+        .execute("select post.*, user.lastname, user.firstname, user.avatar as photo from post join user on post.user_id = user.id where post.id = ?", [id])
         .then(([data]) => {
             return data;
         })
