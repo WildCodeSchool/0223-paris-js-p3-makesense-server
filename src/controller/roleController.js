@@ -1,5 +1,6 @@
 const { findAll, findOne, createRole, removeRole, modifyRole } = require("../model/roleModel"); 
 
+const { findAllUserByRoleId } = require("../model/userModel");
 
 const getAllRoles = async (req, res) => {
     try {
@@ -40,8 +41,10 @@ const getRole = async (req, res) => {
 }
 
 const deleteRole = async (req, res) => {
-    const id = req.params.id;
     try {
+        const id = req.params.id;
+        const searchAllUserByRoleid = await findAllUserByRoleId(id);
+        if (searchAllUserByRoleid.length != 0) return res.status(401).json({ message : "error there are still users who have this role"});
         const dataDeleteRole = await removeRole(id);
         if (dataDeleteRole.affectedRows === 1) {
             res.sendStatus(204);

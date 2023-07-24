@@ -88,7 +88,7 @@ const findCountAvisFromPost = (avis) => {
 
 const findAllAvisFromPost = (id) => {
     return db
-    .execute("select text, user_id from user_post_avis where post_id = ?;", [id])
+    .execute("SELECT user_post_avis.*, user.lastname, user.firstname, user.avatar AS photo FROM user_post_avis JOIN user ON user_post_avis.user_id = user.id WHERE user_post_avis.post_id = ?", [id])
     .then(([data]) => {
         return data;
     })
