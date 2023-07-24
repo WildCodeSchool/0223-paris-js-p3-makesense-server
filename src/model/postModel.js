@@ -12,6 +12,14 @@ const findAll = () => {
         })
 } 
 
+const findPostFromUser = (id) => {
+    return db
+        .execute("select * from post inner join user on post.user_id = user.id where post.user_id = ?", [id])
+        .then(([data]) => {
+            return data;
+        });
+    }
+
 const createPost = (post) => {
     const { title, description, createdDate, status, profit, risk, avatar, user_id, location, impact, deadlineDate, makeDecisionDate, conflitDate } = post;
 
@@ -96,7 +104,7 @@ const findVoteFromPost = (id) => {
 
 const findVoteFromUser = (id) => {
         return db
-            .execute("select p.title, upv.vote from post as p inner join user_post_vote as upv on p.id = upv.post_id where upv.user_id = ?", [id])
+            .execute("select p.*, upv.vote, u.firstname, u.lastname, u.avatar from post as p inner join user_post_vote as upv on p.id = upv.post_id inner join (select id, firstname, lastname, avatar from user)as u on p.user_id = u.id where upv.user_id = ?", [id])
             .then(([data]) => {
                 return data;
             })
@@ -181,4 +189,4 @@ const createUserParticipant = (participant) => {
         })
 } 
 
-module.exports = { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant};
+module.exports = { findAll, findOnePost, findPostFromUser, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant};
