@@ -36,15 +36,20 @@ const migrate = async () => {
   await console.log(`Total Role : ${role.length}`);
 
   const job = [
-    { name : "Directeur Associatif"},
-    { name : "Directeur Général "},
-    { name : "Service Civique"},
-    { name : "RH"},
-    { name : "Développeur"},
-    { name : "Technicien"},
-    { name : "Commercial"},
-    { name : "Brand Manager"},
-    {name : "Design Director"}
+    { name : "Directeur Associatif" },
+    { name : "Directeur Général" },
+    { name : "Service Civique" },
+    { name : "RH" },
+    { name : "Développeur" },
+    { name : "Technicien" },
+    { name : "Commercial" },
+    { name : "Brand Manager" },
+    { name : "Design Director" },
+    { name : "Technicien surface" },
+    { name : "comptable" },
+    { name : "Réceptionniste" },
+    { name : "Community Manager" },
+
   ];
 
   for (let i = 0; i < job.length; i++) {

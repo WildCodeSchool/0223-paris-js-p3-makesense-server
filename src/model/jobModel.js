@@ -62,5 +62,16 @@ const modifyJob = (job, id) => {
         })
 } 
 
+const findOneByJobName = (name) => {
+    return db
+        .execute("select * from job where name = ?", [name])
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+}
 
-module.exports = { findAll, findOne, createJob, removeJob, modifyJob };
+module.exports = { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName };

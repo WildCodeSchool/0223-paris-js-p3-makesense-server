@@ -1,4 +1,4 @@
-const { findAll, findOne, createJob, removeJob, modifyJob } = require("../model/jobModel");
+const { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName } = require("../model/jobModel");
 
 const { findAllUserByJobId } = require("../model/userModel");
 
@@ -20,8 +20,13 @@ const getAllJobs = async (req, res) => {
 const addJob = async (req, res) => {
     const job = req.body;
     try {
-        const dataAddJob = await createJob(job);
-        res.status(201).json(dataAddJob)
+        const dataCheckJobName = await findOneByJobName(job.name);
+        if (dataCheckJobName != 0) {
+            res.status(403).json({error : "Duplicate name job"})
+        } else {
+            const dataAddJob = await createJob(job);
+            res.status(201).json(dataAddJob)
+        }
     } catch (err) {
         console.log("err", err)
         res.status(500).json({error : err.message});

@@ -62,4 +62,16 @@ const modifyRole = (role, id) => {
         })
 } 
 
-module.exports = { findAll, findOne, createRole, removeRole, modifyRole };
+const findOneByRoleName = (name) => {
+    return db
+        .execute("select * from role where name = ?", [name])
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+}
+
+module.exports = { findAll, findOne, createRole, removeRole, modifyRole, findOneByRoleName };
