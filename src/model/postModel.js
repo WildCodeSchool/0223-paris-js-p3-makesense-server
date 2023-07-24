@@ -144,7 +144,7 @@ const findCountPositiveAndNegativeVote = (postId) => {
 
 const findExpertFromPost = (postId) => {
     return db
-    .execute("select u.firstname, u.lastname, u.avatar, p.title  from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and expert= 1;", [postId])
+    .execute("select u.firstname, u.lastname, u.avatar from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and expert= 1;", [postId])
     .then(([data]) => {
         return data;
     })
@@ -156,7 +156,7 @@ const findExpertFromPost = (postId) => {
 
 const findImpactedFromPost = (postId) => {
     return db
-    .execute("select u.firstname, u.lastname, u.avatar, p.title  from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and impacted= 1;", [postId])
+    .execute("select u.firstname, u.lastname, u.avatar from user as u join user_participant as up on u.id = up.user_id join post as p on p.id = up.post_id where post_id= ? and impacted= 1;", [postId])
     .then(([data]) => {
         return data;
     })

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser,getVoteFromPost, addVote, countVote, countPositiveAndNegativeVote,countAllVoteFromPost , addUserParticipant, getExpertFromPost, getImpactedFromPost} = require("../controller/postController.js");
+const { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser,getVoteFromPost, addVote, countVote, countPositiveAndNegativeVote,countAllVoteFromPost , addUserParticipant, getExpertFromPost, getImpactedFromPost, } = require("../controller/postController.js");
 
 const { validatePost } = require("../validator/postValidator.js");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
