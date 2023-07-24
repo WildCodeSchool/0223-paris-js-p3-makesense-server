@@ -1,4 +1,4 @@
-const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant} = require("../model/postModel"); 
+const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant, findPostFromUser} = require("../model/postModel"); 
 
 
 const getAllPosts = async (req, res) => {
@@ -40,6 +40,17 @@ const getPost = async (req, res) => {
     try {
         const dataGetPost = await findOnePost(id);
         res.status(201).json(dataGetPost)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getPostFromUser = async (req, res) => {
+    const id = req.idUser;
+    try {
+        const dataGetPostFromUser = await findPostFromUser(id);
+        res.status(200).json(dataGetPostFromUser)
     } catch (err) {
         console.log("err", err)
         res.status(500).json({error : err.message});
@@ -101,7 +112,7 @@ const editPost = async (req, res) => {
 }
 
 const getVoteFromUser = async (req, res) => {
-    const id = req.params.id;
+    const id = req.idUser;
     try {
         const dataFindVoteFromUser = await findVoteFromUser(id);
         res.status(201).json(dataFindVoteFromUser)
@@ -211,4 +222,4 @@ const getImpactedFromPost = async (req, res) => {
     }
 }
 
-module.exports = { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote, addUserParticipant, getExpertFromPost, getImpactedFromPost};
+module.exports = { getAllPosts, getPost, addPost, getPostFromUser, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote, addUserParticipant, getExpertFromPost, getImpactedFromPost};
