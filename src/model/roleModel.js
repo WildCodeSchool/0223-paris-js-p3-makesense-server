@@ -12,6 +12,18 @@ const findAll = () => {
         })
 } 
 
+const countAll = () => {
+    return db
+        .query("select COUNT(*) as count from role")
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+}
+
 const findOne = (id) => {
     return db
         .execute("select * from role where id = ?", [id])
@@ -74,4 +86,4 @@ const findOneByRoleName = (name) => {
         })
 }
 
-module.exports = { findAll, findOne, createRole, removeRole, modifyRole, findOneByRoleName };
+module.exports = { findAll, findOne, createRole, removeRole, modifyRole, findOneByRoleName, countAll };

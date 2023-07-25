@@ -1,11 +1,12 @@
 const router = require("express").Router();
 
-const { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser,getVoteFromPost, addVote, countVote, countPositiveAndNegativeVote,countAllVoteFromPost , addUserParticipant, getExpertFromPost, getImpactedFromPost, getPostFromUser} = require("../controller/postController.js");
+const { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser,getVoteFromPost, addVote, countVote, countPositiveAndNegativeVote,countAllVoteFromPost , addUserParticipant, getExpertFromPost, getImpactedFromPost, getPostFromUser, getAllCountPosts} = require("../controller/postController.js");
 
 const { validatePost } = require("../validator/postValidator.js");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
 const upload = require("../middlewares/postFileUpload.js");
 
+router.get("/count",authorize, isAdmin, getAllCountPosts);
 router.get("/",authorize, getAllPosts);
 router.post("/",authorize, validatePost, addPost);
 router.get("/me", authorize, getPostFromUser);

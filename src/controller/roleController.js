@@ -1,4 +1,4 @@
-const { findAll, findOne, createRole, removeRole, modifyRole, findOneByRoleName } = require("../model/roleModel"); 
+const { findAll, findOne, createRole, removeRole, modifyRole, findOneByRoleName, countAll } = require("../model/roleModel"); 
 
 const { findAllUserByRoleId } = require("../model/userModel");
 
@@ -17,6 +17,22 @@ const getAllRoles = async (req, res) => {
         res.status(500).json({error : err.message});
     }
 }
+
+const getAllCountRoles = async (req, res) => {
+    try {
+    const datagetAllRoles = await countAll();
+    if (datagetAllRoles.length !== 0) {
+        res.status(200).json(datagetAllRoles)
+    } else {
+        res.status(404).json({error : "No Roles"});
+    }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
 
 const addRole = async (req, res) => {
     const role = req.body;
@@ -80,4 +96,4 @@ const editRole = async (req, res) => {
     }
 }
 
-module.exports = { getAllRoles, getRole, addRole, deleteRole, editRole };
+module.exports = { getAllRoles, getRole, addRole, deleteRole, editRole, getAllCountRoles};

@@ -1,4 +1,4 @@
-const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant, findPostFromUser} = require("../model/postModel"); 
+const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant, findPostFromUser, countAll} = require("../model/postModel"); 
 
 
 const getAllPosts = async (req, res) => {
@@ -16,6 +16,22 @@ const getAllPosts = async (req, res) => {
         res.status(500).json({error : err.message});
     }
 }
+
+const getAllCountPosts = async (req, res) => {
+    try {
+    const datagetAllPosts = await countAll();
+    if (datagetAllPosts.length !== 0) {
+        res.status(200).json(datagetAllPosts)
+    } else {
+        res.status(404).json({error : "No Jobs"});
+    }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
 
 const addPost = async (req, res) => {
     const post = req.body;
@@ -222,4 +238,4 @@ const getImpactedFromPost = async (req, res) => {
     }
 }
 
-module.exports = { getAllPosts, getPost, addPost, getPostFromUser, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote, addUserParticipant, getExpertFromPost, getImpactedFromPost};
+module.exports = { getAllPosts, getPost, addPost, getPostFromUser, deletePost, editPost, getVoteFromUser, getVoteFromPost, addVote, countVote, countAllVoteFromPost, countPositiveAndNegativeVote, addUserParticipant, getExpertFromPost, getImpactedFromPost, getAllCountPosts};

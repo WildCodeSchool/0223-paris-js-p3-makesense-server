@@ -12,6 +12,18 @@ const findAll = () => {
         })
 }
 
+const countAll = () => {
+    return db
+        .query("select COUNT(*) as count from job")
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+}
+
 const findOne = (id) => {
     return db
         .execute("select * from job where id = ?", [id])
@@ -74,4 +86,4 @@ const findOneByJobName = (name) => {
         })
 }
 
-module.exports = { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName };
+module.exports = { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName, countAll };

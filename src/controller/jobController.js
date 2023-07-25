@@ -1,10 +1,25 @@
-const { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName } = require("../model/jobModel");
+const { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName, countAll } = require("../model/jobModel");
 
 const { findAllUserByJobId } = require("../model/userModel");
 
 const getAllJobs = async (req, res) => {
     try {
     const datagetAllJobs = await findAll();
+    if (datagetAllJobs.length !== 0) {
+        res.status(200).json(datagetAllJobs)
+    } else {
+        res.status(404).json({error : "No Jobs"});
+    }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getAllCountJobs = async (req, res) => {
+    try {
+    const datagetAllJobs = await countAll();
     if (datagetAllJobs.length !== 0) {
         res.status(200).json(datagetAllJobs)
     } else {
@@ -80,4 +95,4 @@ const editJob = async (req, res) => {
     }
 }
 
-module.exports = { getAllJobs, getJob, addJob, deleteJob, editJob };
+module.exports = { getAllJobs, getJob, addJob, deleteJob, editJob, getAllCountJobs};
