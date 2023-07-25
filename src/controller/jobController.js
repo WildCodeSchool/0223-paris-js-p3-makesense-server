@@ -19,7 +19,7 @@ const getAllJobs = async (req, res) => {
 
 const getAllCountJobs = async (req, res) => {
     try {
-    const datagetAllJobs = await countAll();
+    const [datagetAllJobs] = await countAll();
     if (datagetAllJobs.length !== 0) {
         res.status(200).json(datagetAllJobs)
     } else {

@@ -20,7 +20,7 @@ const getAllRoles = async (req, res) => {
 
 const getAllCountRoles = async (req, res) => {
     try {
-    const datagetAllRoles = await countAll();
+    const [datagetAllRoles] = await countAll();
     if (datagetAllRoles.length !== 0) {
         res.status(200).json(datagetAllRoles)
     } else {

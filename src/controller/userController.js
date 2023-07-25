@@ -21,7 +21,7 @@ const getAllUsers = async (req, res) => {
 
 const getAllCountUsers = async (req, res) => {
     try {
-    const datagetAllUsers = await countAll();
+    const [datagetAllUsers] = await countAll();
     if (datagetAllUsers.length !== 0) {
         res.status(200).json(datagetAllUsers)
     } else {
