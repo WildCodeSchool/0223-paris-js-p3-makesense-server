@@ -69,7 +69,6 @@ const editJob = async (req, res) => {
 
     try {
         const dataEditJob = await modifyJob(job, id);
-        console.log("dataEditJob", dataEditJob)
         if (dataEditJob.affectedRows === 1) {
             res.json({ id, ...job})
         } else {
