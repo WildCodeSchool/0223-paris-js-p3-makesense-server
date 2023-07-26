@@ -56,9 +56,9 @@ const deleteUser = async (req, res) => {
 }
 
 const editUser = async  (req, res) => {
-    const id = req.params.id;
+    const id = req.idUser;
 
-    const user = req.body;
+    const data = req.body;
 
     try {
 
@@ -69,7 +69,8 @@ const editUser = async  (req, res) => {
 
         const dataEditUser = await modifyUser(user, id);
         if (dataEditUser.affectedRows === 1) {
-            res.json({ id, ...user})
+            const [user] = await findOne(req.idUser)
+            res.json({...user});
         } else {
             res.status(404).json({ message : "No user found"})
         }

@@ -14,6 +14,14 @@ const findAll = () => {
     });
 };
 
+const findPostFromUser = (id) => {
+    return db
+        .execute("select * from post inner join user on post.user_id = user.id where post.user_id = ?", [id])
+        .then(([data]) => {
+            return data;
+        });
+    }
+
 const createPost = (post) => {
   const {
     title,
@@ -290,4 +298,5 @@ module.exports = {
   createUserParticipant,
   findVoteFromUserFromPostId,
   selecIdVote,
+  findPostFromUser
 };

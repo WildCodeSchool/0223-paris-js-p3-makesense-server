@@ -16,8 +16,8 @@ const {
   createUserParticipant,
   findVoteFromUserFromPostId,
   selecIdVote,
+  findPostFromUser,
 } = require("../model/postModel");
-
 const getAllPosts = async (req, res) => {
   try {
     const datagetAllPost = await findAll();
@@ -61,6 +61,17 @@ const getPost = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+const getPostFromUser = async (req, res) => {
+    const id = req.idUser;
+    try {
+        const dataGetPostFromUser = await findPostFromUser(id);
+        res.status(200).json(dataGetPostFromUser)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
 
 const deletePost = async (req, res) => {
   const id = req.params.id;
@@ -116,15 +127,15 @@ const editPost = async (req, res) => {
 };
 
 const getVoteFromUser = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const dataFindVoteFromUser = await findVoteFromUser(id);
-    res.status(201).json(dataFindVoteFromUser);
-  } catch (err) {
-    console.log("err", err);
-    res.status(500).json({ error: err.message });
-  }
-};
+    const id = req.idUser;
+    try {
+        const dataFindVoteFromUser = await findVoteFromUser(id);
+        res.status(201).json(dataFindVoteFromUser)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
 
 const getVoteFromPost = async (req, res) => {
   const id = req.params.id;
@@ -282,4 +293,5 @@ module.exports = {
   getExpertFromPost,
   getImpactedFromPost,
   getUserVoteFromPostId,
+  getPostFromUser,
 };
