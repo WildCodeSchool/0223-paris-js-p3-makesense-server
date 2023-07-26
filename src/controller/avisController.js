@@ -23,7 +23,7 @@ const addAvis = async (req, res) => {
     const avis = req.body;
     const date = new Date();
     try {
-        await createAvis({...avis, date});
+        const addAvisByUser = await createAvis({...avis, date});
         const [getPost] = await findOnePost(avis.post_id)
         if (getPost.length === 0) {
             res.status(404).json({error : "No Post"});
@@ -35,7 +35,7 @@ const addAvis = async (req, res) => {
             }
             const addAlertByUser = await createAlertByUser(newAlert);
             const getUserById = await findOne(avis.user_id);
-            res.status(200).json({addAlertByUser, text: avis.text, date: date, user:getUserById })
+            res.status(200).json({addAlertByUser, addAvisByUser, text: avis.text, date: date, user:getUserById })
         }
     } catch (err) {
         console.log("err", err)
