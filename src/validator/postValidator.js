@@ -1,5 +1,6 @@
 const validatePost = (req, res, next) => {
-    const { title, description, status, profit, risk, location } = req.body;
+    const { title, description, profit, risk, avatar } = req.body;
+    
     const errors = [];
 
     if (title == null || title === "") {
@@ -14,24 +15,8 @@ const validatePost = (req, res, next) => {
         errors.push({ field : "description", message : "This description is required"})
     }
 
-    if (status == null || status === "") {
-        errors.push({ field : "status", message : "This status is required"})
-    }
-
-    if(status.length > 45) {
-        errors.push({ field : "status - FORMAT LIMIT", message : "Character status limit error exceeded (45)"})
-    }
-
     if (profit == null || profit === "") {
         errors.push({ field : "profit", message : "This profit is required"})
-    }
-
-    if (location == null || location === "") {
-        errors.push({ field : "location", message : "This location is required"})
-    }
-
-    if (location.length > 100) {
-        errors.push({ field : "location", message : "Character title limit error exceeded (45)"})
     }
 
     if (risk == null || risk === "") {

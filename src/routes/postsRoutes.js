@@ -7,7 +7,7 @@ const upload = require("../middlewares/postFileUpload.js");
 
 router.get("/count",authorize, isAdmin, getAllCountPosts);
 router.get("/",authorize, getAllPosts);
-router.post("/",authorize, validatePost, addPost);
+router.post("/", authorize, upload.single("avatar"), validatePost, addPost);
 router.get("/me", authorize, getPostFromUser);
 router.get("/:id",authorize, getPost);
 router.delete("/:id",authorize, isAdmin, deletePost);

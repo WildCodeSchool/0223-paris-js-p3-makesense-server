@@ -32,21 +32,22 @@ const getAllCountPosts = async (req, res) => {
 
 
 const addPost = async (req, res) => {
-  const post = req.body;
-  const createdDate = new Date();
+    const post = req.body;
+    const createdDate = new Date();
+    console.log(req.body);
 
-  try {
-    const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
-    if (post.avatar) {
-      if (!req.file) return res.status(400).json("a error occured during the upload");
-      filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+    try {
+        const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
+        if (post.avatar) {
+            if (!req.file) return res.status(400).json("a error occured during the upload");
+            filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+        }
+        const dataAddUser = await createPost({...post, createdDate, avatar : filePath, status : "En cours", user_id: req.idUser});
+        res.status(201).json(dataAddUser)
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
     }
-    const dataAddUser = await createPost({ ...post, createdDate, avatar: filePath });
-    res.status(201).json(dataAddUser);
-  } catch (err) {
-    console.log("err", err);
-    res.status(500).json({ error: err.message });
-  }
 };
 
 const getPost = async (req, res) => {
