@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { getAllPosts, getPost, addPost, deletePost, editPost, getVoteFromUser,getVoteFromPost, addVote, countVote, countPositiveAndNegativeVote,countAllVoteFromPost , addUserParticipant, getExpertFromPost, getImpactedFromPost, } = require("../controller/postController.js");
+const { getAllPosts, getPost, addPost,resetVote, deletePost, editPost, getVoteFromUser,getVoteFromPost, addVote, countVote, countPositiveAndNegativeVote,countAllVoteFromPost , addUserParticipant, getExpertFromPost, getImpactedFromPost,getUserVoteFromPostId, } = require("../controller/postController.js");
 
 const { validatePost } = require("../validator/postValidator.js");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
@@ -13,7 +13,9 @@ router.delete("/:id",authorize, isAdmin, deletePost);
 router.put("/:id",authorize, upload.single("avatar"), editPost);
 router.get("/votes/fromuser/:id",authorize, getVoteFromUser);
 router.get("/votes/frompost/:id",authorize, getVoteFromPost);
+router.get("/votes/fromvote/fromuser/:id/:post_id",authorize, getUserVoteFromPostId);
 router.post("/votes",authorize, addVote);
+router.delete("/votes/:id",authorize, resetVote);
 router.get("/votes/countvote/:count",authorize, countVote);
 router.get("/votes/allvotepost/:id",authorize, countPositiveAndNegativeVote);
 router.get("/votes/votepost/:count",authorize, countAllVoteFromPost);

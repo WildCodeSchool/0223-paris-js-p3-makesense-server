@@ -1,8 +1,9 @@
-const { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost } = require("../model/avisModel"); 
+const { findAll, findOneAvis, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost } = require("../model/avisModel"); 
 
 const {  findAlertByUserID, createAlertByUser, createAlert } = require("../model/alertModel"); 
 
 const { findOnePost } = require("../model/postModel");
+const { findOne } = require("../model/userModel");
 
 const getAllAvis = async (req, res) => {
     try {
@@ -33,7 +34,8 @@ const addAvis = async (req, res) => {
                 user_id : avis.user_id
             }
             const addAlertByUser = await createAlertByUser(newAlert);
-            res.status(200).json({addAlertByUser})
+            const getUserById = await findOne(avis.user_id);
+            res.status(200).json({addAlertByUser, text: avis.text, date: date, user:getUserById })
         }
     } catch (err) {
         console.log("err", err)
@@ -44,7 +46,7 @@ const addAvis = async (req, res) => {
 const getAvis = async (req, res) => {
     const id = req.params.id;
     try {
-        const dataGetAvis = await findOne(id);
+        const dataGetAvis = await findOneAvis(id);
         res.status(201).json(dataGetAvis)
     } catch (err) {
         console.log("err", err)
@@ -69,7 +71,6 @@ const deleteAvis = async (req, res) => {
 
 const editAvis = async (req, res) => {
     const id = req.params.id;
-
     const avis = req.body;
 
     try {
