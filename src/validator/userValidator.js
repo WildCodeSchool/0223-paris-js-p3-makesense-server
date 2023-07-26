@@ -14,7 +14,7 @@ const validateUserPost = (req, res, next) => {
     const firstnameRegex = /[-,a-zA-ZÀ-ÿ ']{2,}/;
 
     if (!firstnameRegex.test(firstname)){
-    errors.push({ field : "firstname", message : "invalid firstname"})
+    errors.push({ field : "firstname - FORMAT INCORRECT", message : "invalid firstname"})
     }
 
     if (lastname == null || lastname === "") {
@@ -28,7 +28,7 @@ const validateUserPost = (req, res, next) => {
     const lastnameRegex = /[-,a-zA-ZÀ-ÿ ']{2,}/;
 
     if (!lastnameRegex.test(lastname)){
-    errors.push({ field : "lastname", message : "invalid lastname"})
+    errors.push({ field : "lastname - FORMAT INCORRECT", message : "invalid lastname"})
     }
 
     if (email == null || email === "") {
