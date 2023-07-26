@@ -14,6 +14,18 @@ const findAll = () => {
     });
 };
 
+const countAll = () => {
+    return db
+        .query("select COUNT(*) as count from post")
+        .then(([data]) => {
+            return data;
+        })
+        .catch((err) =>{
+            console.error("Error ", err)
+            return err;
+        })
+}
+
 const findPostFromUser = (id) => {
     return db
         .execute("select * from post inner join user on post.user_id = user.id where post.user_id = ?", [id])
@@ -280,23 +292,5 @@ const createUserParticipant = (participant) => {
     });
 };
 
-module.exports = {
-  findAll,
-  findOnePost,
-  createPost,
-  removePost,
-  modifyPost,
-  createVote,
-  removeVote,
-  findVoteFromPost,
-  findVoteFromUser,
-  findCountVote,
-  findCountAllVoteFromPost,
-  findCountPositiveAndNegativeVote,
-  findExpertFromPost,
-  findImpactedFromPost,
-  createUserParticipant,
-  findVoteFromUserFromPostId,
-  selecIdVote,
-  findPostFromUser
-};
+module.exports = { findAll, findOnePost, findPostFromUser, createPost, removePost, modifyPost, createVote, removeVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant, countAll, findVoteFromUserFromPostId, selecIdVote, findPostFromUser};
+

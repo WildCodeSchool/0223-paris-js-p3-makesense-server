@@ -1,4 +1,4 @@
-const { findAll, findOne, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail } = require("../model/userModel"); 
+const { findAll, findOne, removeUser, modifyUser, getByEmail, createUserAdmin, updateOneByMail, countAll } = require("../model/userModel"); 
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
 const {sendResetPasswordMail, createAccountMail} = require("../helpers/mailer");
@@ -12,6 +12,21 @@ const getAllUsers = async (req, res) => {
         } else {
             res.status(404).json({error : "No users"});
         }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+const getAllCountUsers = async (req, res) => {
+    try {
+    const [datagetAllUsers] = await countAll();
+    if (datagetAllUsers.length !== 0) {
+        res.status(200).json(datagetAllUsers)
+    } else {
+        res.status(404).json({error : "No Users"});
+    }
 
     } catch (err) {
         console.log("err", err)
@@ -154,4 +169,4 @@ const resetPassword = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword};
+module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers};

@@ -1,4 +1,4 @@
-const { findAll, findOne, createRole, removeRole, modifyRole } = require("../model/roleModel"); 
+const { findAll, findOne, createRole, removeRole, modifyRole, findOneByRoleName, countAll } = require("../model/roleModel"); 
 
 const { findAllUserByRoleId } = require("../model/userModel");
 
@@ -18,11 +18,32 @@ const getAllRoles = async (req, res) => {
     }
 }
 
+const getAllCountRoles = async (req, res) => {
+    try {
+    const [datagetAllRoles] = await countAll();
+    if (datagetAllRoles.length !== 0) {
+        res.status(200).json(datagetAllRoles)
+    } else {
+        res.status(404).json({error : "No Roles"});
+    }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
+
 const addRole = async (req, res) => {
     const role = req.body;
     try {
-        const dataAddRole = await createRole(role);
-        res.status(201).json(dataAddRole)
+        const dataCheckRoleName = await findOneByRoleName(role.name);
+        if (dataCheckRoleName != 0) {
+            res.status(403).json({error : "Duplicate name role"})
+        } else {
+            const dataAddRole = await createRole(role);
+            res.status(201).json(dataAddRole)
+        }
     } catch (err) {
         console.log("err", err)
         res.status(500).json({error : err.message});
@@ -49,7 +70,7 @@ const deleteRole = async (req, res) => {
         if (dataDeleteRole.affectedRows === 1) {
             res.sendStatus(204);
         } else {
-            res.status(404).json({ message : "No role found"})
+            res.status(404).json({ error : "No role found"})
         }
     } catch (err) {
         console.log("err", err)
@@ -75,4 +96,4 @@ const editRole = async (req, res) => {
     }
 }
 
-module.exports = { getAllRoles, getRole, addRole, deleteRole, editRole };
+module.exports = { getAllRoles, getRole, addRole, deleteRole, editRole, getAllCountRoles};

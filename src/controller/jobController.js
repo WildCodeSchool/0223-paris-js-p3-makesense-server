@@ -1,4 +1,4 @@
-const { findAll, findOne, createJob, removeJob, modifyJob } = require("../model/jobModel");
+const { findAll, findOne, createJob, removeJob, modifyJob, findOneByJobName, countAll } = require("../model/jobModel");
 
 const { findAllUserByJobId } = require("../model/userModel");
 
@@ -17,11 +17,31 @@ const getAllJobs = async (req, res) => {
     }
 }
 
+const getAllCountJobs = async (req, res) => {
+    try {
+    const [datagetAllJobs] = await countAll();
+    if (datagetAllJobs.length !== 0) {
+        res.status(200).json(datagetAllJobs)
+    } else {
+        res.status(404).json({error : "No Jobs"});
+    }
+
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
 const addJob = async (req, res) => {
     const job = req.body;
     try {
-        const dataAddJob = await createJob(job);
-        res.status(201).json(dataAddJob)
+        const dataCheckJobName = await findOneByJobName(job.name);
+        if (dataCheckJobName != 0) {
+            res.status(403).json({error : "Duplicate name job"})
+        } else {
+            const dataAddJob = await createJob(job);
+            res.status(201).json(dataAddJob)
+        }
     } catch (err) {
         console.log("err", err)
         res.status(500).json({error : err.message});
@@ -64,7 +84,6 @@ const editJob = async (req, res) => {
 
     try {
         const dataEditJob = await modifyJob(job, id);
-        console.log("dataEditJob", dataEditJob)
         if (dataEditJob.affectedRows === 1) {
             res.json({ id, ...job})
         } else {
@@ -76,4 +95,4 @@ const editJob = async (req, res) => {
     }
 }
 
-module.exports = { getAllJobs, getJob, addJob, deleteJob, editJob };
+module.exports = { getAllJobs, getJob, addJob, deleteJob, editJob, getAllCountJobs};
