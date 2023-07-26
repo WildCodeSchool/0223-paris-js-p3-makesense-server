@@ -1,7 +1,6 @@
 const validateAvisPost = (req, res, next) => {
     const { text } = req.body;
     const errors = [];
-
     if (text == null || text === "") {
         errors.push({ field : "text", message : "Text is required"})
     }

@@ -12,7 +12,7 @@ const findAll = () => {
         })
 } 
 
-const findOne = (id) => {
+const findOneAvis = (id) => {
     return db
         .execute("select * from user_post_avis where id = ?", [id])
         .then(([data]) => {
@@ -99,4 +99,4 @@ const findAllAvisFromPost = (id) => {
 }
 
 
-module.exports = { findAll, findOne, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost };
+module.exports = { findAll, findOneAvis, createAvis, removeAvis, modifyAvis, findAvisFromUser, findCountAvisFromPost, findAllAvisFromPost };
