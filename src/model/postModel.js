@@ -189,6 +189,19 @@ const findVoteFromUser = (id) => {
       return err;
     });
 };
+
+const followVoteFromUser = (id) => {
+  return db
+    .execute("select p.*, upv.vote, u.firstname, u.lastname, u.avatar from post as p inner join user_post_vote as upv on p.id = upv.post_id inner join (select id, firstname, lastname, avatar from user)as u on p.user_id = u.id where upv.user_id = ?", [id])
+    .then(([data]) => {
+      return data;
+    })
+    .catch((err) => {
+      console.error("Error ", err);
+      return err;
+    });
+};
+
 const findVoteFromUserFromPostId = (id) => {
   return db
     .execute(
@@ -292,5 +305,5 @@ const createUserParticipant = (participant) => {
     });
 };
 
-module.exports = { findAll, findOnePost, findPostFromUser, createPost, removePost, modifyPost, createVote, removeVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant, countAll, findVoteFromUserFromPostId, selecIdVote, findPostFromUser};
+module.exports = { findAll, findOnePost, findPostFromUser, createPost, removePost, modifyPost, createVote, removeVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote,findExpertFromPost,findImpactedFromPost, createUserParticipant, countAll, findVoteFromUserFromPostId, selecIdVote, findPostFromUser, followVoteFromUser};
 

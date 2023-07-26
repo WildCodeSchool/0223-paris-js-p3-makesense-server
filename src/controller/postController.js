@@ -1,4 +1,4 @@
-const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, removeVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant, findPostFromUser, findVoteFromUserFromPostId, selecIdVote, countAll} = require("../model/postModel"); 
+const { findAll, findOnePost, createPost, removePost, modifyPost, createVote, removeVote, findVoteFromPost, findVoteFromUser, findCountVote, findCountAllVoteFromPost,findCountPositiveAndNegativeVote, findExpertFromPost,findImpactedFromPost, createUserParticipant, findPostFromUser, findVoteFromUserFromPostId, selecIdVote, countAll, followVoteFromUser} = require("../model/postModel"); 
 
 const getAllPosts = async (req, res) => {
   try {
@@ -128,7 +128,7 @@ const editPost = async (req, res) => {
 const getVoteFromUser = async (req, res) => {
     const id = req.idUser;
     try {
-        const dataFindVoteFromUser = await findVoteFromUser(id);
+        const dataFindVoteFromUser = await followVoteFromUser(id);
         res.status(201).json(dataFindVoteFromUser)
     } catch (err) {
         console.log("err", err)
