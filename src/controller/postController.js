@@ -20,6 +20,7 @@ const getAllPosts = async (req, res) => {
 const addPost = async (req, res) => {
     const post = req.body;
     const createdDate = new Date();
+    console.log(req.body);
 
     try {
         const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
@@ -27,7 +28,7 @@ const addPost = async (req, res) => {
             if (!req.file) return res.status(400).json("a error occured during the upload");
             filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
         }
-        const dataAddUser = await createPost({...post, createdDate, avatar : filePath});
+        const dataAddUser = await createPost({...post, createdDate, avatar : filePath, status : "En cours", user_id: req.idUser});
         res.status(201).json(dataAddUser)
     } catch (err) {
         console.log("err", err)
@@ -183,7 +184,7 @@ const countAllVoteFromPost = async (req, res) => {
 
 const addUserParticipant = async (req, res) => {
     const participant = req.body; 
-
+    console.log("participant", participant)
     if (!participant?.users) {
         return res.status(500).json("Error tab user, user participants")
     }
