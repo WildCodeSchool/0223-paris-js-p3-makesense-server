@@ -632,6 +632,36 @@ const migrate = async () => {
       text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
       date : "2023-07-27T12:01:38.000"
     },
+    { user_id : 4,
+      post_id : 3,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 2,
+      post_id : 3,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 1,
+      post_id : 3,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 1,
+      post_id : 5,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 2,
+      post_id : 6,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 9,
+      post_id : 7,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
   ];
 
   for (let i = 0; i < user_post_avis.length; i++) {
