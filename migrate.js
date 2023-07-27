@@ -615,13 +615,28 @@ const migrate = async () => {
 
   const user_post_vote = [
     { user_id : 1, post_id : 1, vote : 1},
+    { user_id : 1, post_id : 2, vote : 1},
+    { user_id : 1, post_id : 3, vote : 1},
+    { user_id : 1, post_id : 8, vote : 1},
+    { user_id : 1, post_id : 10, vote : 1},
+    { user_id : 2, post_id : 7, vote : 0},
+    { user_id : 2, post_id : 6, vote : 0},
+    { user_id : 2, post_id : 4, vote : 0},
+    { user_id : 2, post_id : 9, vote : 1},
     { user_id : 2, post_id : 1, vote : 0},
     { user_id : 3, post_id : 1, vote : 1},
+    { user_id : 3, post_id : 7, vote : 1},
+    { user_id : 3, post_id : 10, vote : 1},
+    { user_id : 3, post_id : 8, vote : 1},
+    { user_id : 4, post_id : 8, vote : 1},
+    { user_id : 4, post_id : 7, vote : 1},
+    { user_id : 4, post_id : 11, vote : 1},
+    { user_id : 4, post_id : 1, vote : 1},
     { user_id : 4, post_id : 1, vote : 0},
     { user_id : 5, post_id : 1, vote : 1},
   ];
 
-  for (let i = 0; i < user_post_avis.length; i++) {
+  for (let i = 0; i < user_post_vote.length; i++) {
     const { user_id, post_id, vote } = user_post_vote[i];
     await connection.query("insert into user_post_vote (user_id, post_id, vote) values (?, ?, ?)", [user_id, post_id, vote]);
     await console.log(`Add User Post Vote : n°${i+1}`);
