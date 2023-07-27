@@ -602,7 +602,21 @@ const migrate = async () => {
   await console.log(`Total ser Participant : ${user_participant.length}`);
 
   const user_post_avis = [
-    { user_id : 1, post_id : 1, text : "avis user 1", date : "2023-06-21T12:01:38.000"},
+    { user_id : 1,
+      post_id : 1,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 7,
+      post_id : 1,
+      text : "J'ai acheté la voiture électrique XYZ et je suis ravi de son design futuriste. Cependant, j'ai remarqué qu'elle avait tendance à se transformer en un robot géant lorsqu'elle était garée trop longtemps au soleil. Cela a causé quelques problèmes avec les autres véhicules garés à proximité, mais bon, c'est la vie avec une voiture électrique avancée",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 8,
+      post_id : 1,
+      text : "La voiture électrique XYZ est le pire achat que j'ai jamais fait. Dès que j'ai appuyé sur l'accélérateur, elle a décollé dans les airs et s'est envolée au-dessus des nuages, me laissant totalement perplexe. J'ai dû passer des heures à attendre qu'elle revienne sur terre. Je ne recommande absolument pas cette voiture à quiconque",
+      date : "2023-07-27T12:01:38.000"
+    },
   ];
 
   for (let i = 0; i < user_post_avis.length; i++) {
@@ -634,6 +648,11 @@ const migrate = async () => {
     { user_id : 4, post_id : 1, vote : 1},
     { user_id : 4, post_id : 1, vote : 0},
     { user_id : 5, post_id : 1, vote : 1},
+    { user_id : 5, post_id : 3, vote : 1},
+    { user_id : 5, post_id : 4, vote : 1},
+    { user_id : 5, post_id : 7, vote : 1},
+    { user_id : 6, post_id : 2, vote : 1},
+    { user_id : 6, post_id : 7, vote : 1},
   ];
 
   for (let i = 0; i < user_post_vote.length; i++) {
