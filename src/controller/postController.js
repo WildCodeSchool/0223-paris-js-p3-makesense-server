@@ -38,7 +38,8 @@ const addPost = async (req, res) => {
 
     try {
         const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
-        if (post.avatar) {
+        console.log("req?.file", req?.file)
+        if (req?.file) {
             if (!req.file) return res.status(400).json("a error occured during the upload");
             filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
         }

@@ -617,6 +617,21 @@ const migrate = async () => {
       text : "La voiture électrique XYZ est le pire achat que j'ai jamais fait. Dès que j'ai appuyé sur l'accélérateur, elle a décollé dans les airs et s'est envolée au-dessus des nuages, me laissant totalement perplexe. J'ai dû passer des heures à attendre qu'elle revienne sur terre. Je ne recommande absolument pas cette voiture à quiconque",
       date : "2023-07-27T12:01:38.000"
     },
+    { user_id : 8,
+      post_id : 2,
+      text : "La voiture électrique XYZ est le pire achat que j'ai jamais fait. Dès que j'ai appuyé sur l'accélérateur, elle a décollé dans les airs et s'est envolée au-dessus des nuages, me laissant totalement perplexe. J'ai dû passer des heures à attendre qu'elle revienne sur terre. Je ne recommande absolument pas cette voiture à quiconque",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 4,
+      post_id : 2,
+      text : "La voiture électrique XYZ est le pire achat que j'ai jamais fait. Dès que j'ai appuyé sur l'accélérateur, elle a décollé dans les airs et s'est envolée au-dessus des nuages, me laissant totalement perplexe. J'ai dû passer des heures à attendre qu'elle revienne sur terre. Je ne recommande absolument pas cette voiture à quiconque",
+      date : "2023-07-27T12:01:38.000"
+    },
+    { user_id : 4,
+      post_id : 2,
+      text : "J'ai été très déçu par la voiture électrique XYZ. La batterie s'est vidée après seulement 10 minutes de conduite, et le système de recharge ne fonctionnait pas du tout. De plus, le tableau de bord était illisible car il était écrit en une langue étrangère que je ne comprenais pas. Vraiment pas pratique pour une utilisation quotidienne",
+      date : "2023-07-27T12:01:38.000"
+    },
   ];
 
   for (let i = 0; i < user_post_avis.length; i++) {
