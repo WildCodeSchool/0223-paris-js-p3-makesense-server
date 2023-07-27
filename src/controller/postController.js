@@ -37,11 +37,9 @@ const addPost = async (req, res) => {
     console.log(req.body);
 
     try {
-        const filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
-        console.log("post.avatar", post.avatar)
-        if (post.avatar) {
-            if (!req.file) return res.status(400).json("a error occured during the upload");
-            filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
+        let filePath = `${process.env.BACKEND_URL}/upload/post/default_background_project.jpg`;
+        if (req.file) {
+          filePath = req.protocol + "://" + req.get("host") + "/upload/post/" + req.file.filename;
         }
         const dataAddUser = await createPost({...post, createdDate, avatar : filePath, status : "En cours", user_id: req.idUser});
         res.status(201).json(dataAddUser)
