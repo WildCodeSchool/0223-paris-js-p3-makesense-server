@@ -28,7 +28,7 @@ const countAll = () => {
 
 const findPostFromUser = (id) => {
     return db
-        .execute("select * from post inner join user on post.user_id = user.id where post.user_id = ?", [id])
+        .execute("select post.*, user.avatar as photo, user.lastname, user.firstname from post inner join user on post.user_id = user.id where post.user_id = ?", [id])
         .then(([data]) => {
             return data;
         });
@@ -192,7 +192,7 @@ const findVoteFromUser = (id) => {
 
 const followVoteFromUser = (id) => {
   return db
-    .execute("select p.*, upv.vote, u.firstname, u.lastname, u.avatar from post as p inner join user_post_vote as upv on p.id = upv.post_id inner join (select id, firstname, lastname, avatar from user)as u on p.user_id = u.id where upv.user_id = ?", [id])
+    .execute("select p.*, upv.vote, u.firstname, u.lastname, u.avatar as photo from post as p inner join user_post_vote as upv on p.id = upv.post_id inner join (select id, firstname, lastname, avatar from user)as u on p.user_id = u.id where upv.user_id = ?", [id])
     .then(([data]) => {
       return data;
     })

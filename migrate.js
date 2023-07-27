@@ -102,7 +102,7 @@ const migrate = async () => {
         "lastname": "Djnt",
         "email": "jean-maxime@makesense.org",
         "password": "jean-maxime",
-        "avatar": `${process.env.BACKEND_URL}/upload/user/default_user.png`,
+        "avatar": `${process.env.BACKEND_URL}/upload/user/jean_maxime.png`,
         "affiliated_site": "France",
         "tel": "07 22 33 44 75",
         "job_id": "5",
@@ -318,6 +318,21 @@ const migrate = async () => {
     "conflitDate": "2023-08-31T15:01:55.000"
   },
   {
+    "title": "Découvrez mon projet audacieux pour réinventer la notion même de semaine de travail !",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "createdDate": "2023-06-20T12:01:38.000",
+    "status": "Conflit",
+    "profit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "risk": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "avatar": `${process.env.BACKEND_URL}/upload/post/bureau_vide.png`,
+    "user_id": "4",
+    "location": "France",
+    "impact": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "deadlineDate":"2023-06-23T12:01:38.000",
+    "makeDecisionDate": "2023-06-30T12:01:18.000",
+    "conflitDate": "2023-07-30T15:01:55.000"
+  },
+  {
     "title": "Déménager hors de Paris !!!",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "createdDate": "2023-06-03T12:01:38.000",
@@ -333,7 +348,7 @@ const migrate = async () => {
     "conflitDate": "2023-08-22T15:01:55.000"
   },
   {
-    "title": "Devenir DevOps en 2023 ???",
+    "title": "Devenir DevOps en 2023 à Rouane ???",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "createdDate": "2023-06-03T12:01:38.000",
     "status": "Conflit",
@@ -572,6 +587,10 @@ const migrate = async () => {
     { user_id : 3, post_id : 11, expert : 1, impacted : 1},
     { user_id : 4, post_id : 11, expert : 1, impacted : 1},
     { user_id : 5, post_id : 11, expert : 1, impacted : 1},
+    { user_id : 5, post_id : 12, expert : 1, impacted : 1},
+    { user_id : 4, post_id : 12, expert : 1, impacted : 1},
+    { user_id : 3, post_id : 12, expert : 1, impacted : 1},
+    { user_id : 3, post_id : 12, expert : 1, impacted : 0},
   ];
 
   for (let i = 0; i < user_participant.length; i++) {
@@ -584,10 +603,6 @@ const migrate = async () => {
 
   const user_post_avis = [
     { user_id : 1, post_id : 1, text : "avis user 1", date : "2023-06-21T12:01:38.000"},
-    { user_id : 2, post_id : 1, text : "avis user 2", date : "2023-06-21T12:02:12.000"},
-    { user_id : 3, post_id : 1, text : "avis user 3", date : "2023-07-21T12:12:08.000"},
-    { user_id : 4, post_id : 1, text : "avis user 4", date : "2023-07-21T12:13:24.000"},
-    { user_id : 5, post_id : 1, text : "avis user 5", date : "2023-08-21T12:10:43.000"},
   ];
 
   for (let i = 0; i < user_post_avis.length; i++) {
