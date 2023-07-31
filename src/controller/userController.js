@@ -79,10 +79,10 @@ const editUser = async  (req, res) => {
 
         if (req.file) {
             const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
-            user.avatar = await uploadedFilePath;
+            data.avatar = await uploadedFilePath;
         }
 
-        const dataEditUser = await modifyUser(user, id);
+        const dataEditUser = await modifyUser(data, id);
         if (dataEditUser.affectedRows === 1) {
             const [user] = await findOne(req.idUser)
             res.json({...user});
@@ -94,7 +94,32 @@ const editUser = async  (req, res) => {
         res.status(500).json({error : err.message});
     }
 }
- 
+
+const editUserAdmin = async  (req, res) => {
+    const id = req.params.id;
+
+    const data = req.body;
+
+    try {
+
+        if (req.file) {
+            const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
+            data.avatar = await uploadedFilePath;
+        }
+
+        const dataEditUser = await modifyUser(data, id);
+        if (dataEditUser.affectedRows === 1) {
+            const [user] = await findOne(req.idUser)
+            res.json({...user});
+        } else {
+            res.status(404).json({ message : "No user found"})
+        }
+    } catch (err) {
+        console.log("err", err)
+        res.status(500).json({error : err.message});
+    }
+}
+
 const register = async (req, res) => {
 
     console.log("req.body", req.body);
@@ -169,4 +194,4 @@ const resetPassword = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers};
+module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers, editUserAdmin};

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { getAllUsers, getUser, deleteUser, editUser, register, login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers } = require("../controller/userController.js");
+const { getAllUsers, getUser, deleteUser, editUser, register, login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers, editUserAdmin } = require("../controller/userController.js");
 
 const { validateUserPost, validateUserPut } = require("../validator/userValidator.js");
 const {authorize, isAdmin} = require("../middlewares/auth.js")
@@ -17,6 +17,7 @@ router.post("/resetPassword", resetPassword);
 router.get("/logout",authorize, logout);
 router.get("/:id",authorize, getUser);
 router.delete("/:id",authorize, isAdmin, deleteUser);
-router.put("/:id",authorize, upload.single("avatar"), validateUserPut, editUser);
+router.put("/admin/:id",authorize, isAdmin, upload.single("avatar"), validateUserPut, editUserAdmin);
+router.put("/", authorize, upload.single("avatar"), validateUserPut, editUser);
 
 module.exports = router;
