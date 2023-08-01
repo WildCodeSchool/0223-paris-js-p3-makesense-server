@@ -36,8 +36,22 @@ const getAllCountUsers = async (req, res) => {
 
 const getCurrentUser = async (req, res, next) => {
     try {
-        const [user] = await findOne(req.idUser);
-        res.status(200).json(user);
+        const user = await findOne(req.idUser);
+        const MapUserPassword =  user.map(data => {
+            return {
+                id : data.id,
+                firstname : data.firstname,
+                lastname : data.lastname,
+                email : data.email,
+                avatar : data.avatar,
+                affiliated_site : data.affiliated_site,
+                tel : data.tel,
+                job_id : data.job_id,
+                role_id : data.role_id,
+                admin : data.admin
+            }
+        })
+        res.status(200).json(MapUserPassword[0]);
     } catch (err) {
         next(err);
     }
@@ -122,7 +136,6 @@ const editUserAdmin = async  (req, res) => {
 
 const register = async (req, res) => {
 
-    console.log("req.body", req.body);
     try {
         const { lastname, firstname, email, avatar, job_id, role_id } = req.body;
         const { password } = req; 
@@ -151,7 +164,7 @@ const login = async (req, res) => {
         const [user] = await getByEmail(email);
         if (!user) return res.status(400).json("Invalid email");
         if (await argon.verify(user.password, password)) {
-            const token = jwt.sign({id: user.id, role: user.role_id, job: user.job_id, admin: user.admin}, process.env.JWT_AUTH_SECRET, {expiresIn: "1h"});
+            const token = jwt.sign({id: user.id, role: user.role_id, job: user.job_id, admin: user.admin }, process.env.JWT_AUTH_SECRET, {expiresIn: "1h"});
             res.cookie("access_token", token, {httpOnly: true, secure: process.env.NODE_ENV == "production"}).status(200).json({email, id: user.id, role: user.role, avatar: user.avatar, job: user.job_id, admin: user.admin});
         } 
         else
