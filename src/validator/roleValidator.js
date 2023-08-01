@@ -10,7 +10,7 @@ const validateRoleName = (req, res, next) => {
         errors.push({ field : "name - FORMAT LIMIT", message : "Character name limit error exceeded (45)"})
     }
 
-    const roleRegex = /[-,a-zA-ZÀ-ÿ ']{2,}/;
+    const roleRegex = /^[-,a-zA-ZÀ-ÿ ']*$/;
 
     if (!roleRegex.test(name)){
     errors.push({ field : "name - FORMAT INCORECT", message : "invalid FORMAT"})

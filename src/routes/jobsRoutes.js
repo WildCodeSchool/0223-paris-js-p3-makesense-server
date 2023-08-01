@@ -9,6 +9,6 @@ router.get("/",authorize, getAllJobs);
 router.post("/",authorize, isAdmin, validateJob, addJob);
 router.get("/:id",authorize, getJob);
 router.delete("/:id",authorize, isAdmin, deleteJob);
-router.put("/:id",authorize, isAdmin, editJob);
+router.put("/:id",authorize, isAdmin, validateJob, editJob);
 
 module.exports = router;
