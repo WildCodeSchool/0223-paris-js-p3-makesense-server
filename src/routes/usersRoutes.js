@@ -17,7 +17,7 @@ router.post("/resetPassword", resetPassword);
 router.get("/logout",authorize, logout);
 router.get("/:id",authorize, isAdmin, getUser);
 router.delete("/:id",authorize, isAdmin, deleteUser);
-router.put("/admin/:id",authorize, isAdmin, upload.single("avatar"), validateUser, editUserAdmin);
+router.put("/admin/:id", authorize, isAdmin, upload.single("avatar"), validateUser, editUserAdmin);
 router.put("/", authorize, upload.single("avatar"), validateUser, editUser);
 
 module.exports = router;

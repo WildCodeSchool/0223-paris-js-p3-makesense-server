@@ -91,6 +91,13 @@ const editUser = async  (req, res) => {
 
     try {
 
+        const users = await findAll();
+        const filterDataEmail = users.filter(user => user.email === data?.email)
+
+        if (filterDataEmail) {
+            if (filterDataEmail[0]?.id != undefined && filterDataEmail[0]?.id != id) return res.status(400).json({ message : "Email doublon"})
+        }
+        
         if (req.file) {
             const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
             data.avatar = await uploadedFilePath;
@@ -115,6 +122,13 @@ const editUserAdmin = async  (req, res) => {
     const data = req.body;
 
     try {
+
+        const users = await findAll();
+        const filterDataEmail = users.filter(user => user.email === data?.email)
+
+        if (filterDataEmail) {
+            if (filterDataEmail[0]?.id != undefined && filterDataEmail[0]?.id != id) return res.status(400).json({ message : "Email doublon"})
+        }
 
         if (req.file) {
             const uploadedFilePath = await req.protocol + "://" + req.get("host") + "/upload/user/" + req.file.filename;
