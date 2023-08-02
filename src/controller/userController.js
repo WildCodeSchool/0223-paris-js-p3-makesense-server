@@ -198,11 +198,12 @@ const sendResetPassword = async (req, res, next) => {
     const { email } = req.body;
 
     try {
-        const resetToken = jwt.sign({ email }, process.env.JWT_AUTH_SECRET);
+        const resetToken = jwt.sign({ email }, process.env.JWT_AUTH_SECRET, { expiresIn: '15m' });
         const url = `${process.env.FRONTEND_URL}/resetPassword?token=${resetToken}`;
-        const result = await sendResetPasswordMail({ dest: email, url });
-        res.sendStatus(200).json({result});
+        const result = await sendResetPasswordMail({ dest: email, url, duree: "15min" });
+        res.status(200).json({result});
     } catch (error) {
+        console.log("error", error)
         next(error);
     }
 
@@ -214,11 +215,30 @@ const resetPassword = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_AUTH_SECRET);
         const hash = await argon.hash(password);
+        const users = await findAll();
+        const [filterDataEmail] = users.filter(user => user.email === decoded?.email)
+        const checkPassWorld = await argon.verify(filterDataEmail.password, password);
+        if (checkPassWorld) {
+            res.status(400).json({error : "Password identical"});
+        }
         await updateOneByMail({password: hash}, decoded.email);
-        res.sendStatus(204);
+        delete decoded?.email;
+        res.status(204);
     } catch (error) {
+        console.log("error", error)
         next(error);
     }
 }
 
-module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers, editUserAdmin};
+const verifyToken = (req, res, next) => {
+    const { token } = req.body;
+  
+    try {
+      jwt.verify(token, process.env.JWT_AUTH_SECRET);
+      res.status(200).json({ valid: true });
+    } catch (error) {
+        res.status(401).json({ valid: false });
+    }
+};
+
+module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers, editUserAdmin, verifyToken};
