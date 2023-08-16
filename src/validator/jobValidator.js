@@ -10,10 +10,10 @@ const validateJob = (req, res, next) => {
         errors.push({ field : "name - FORMAT LIMIT", message : "Character name limit error exceeded (45)"})
     }
 
-    const jobRegex = /[-,a-zA-ZÀ-ÿ ']{2,}/;
+    const jobRegex = /^[-,a-zA-ZÀ-ÿ ']*$/;
 
     if (!jobRegex.test(name)){
-    errors.push({ field : "name - FORMAT INCORECT", message : "invalid FORMAT"})
+        errors.push({ field : "name - FORMAT INCORECT", message : "invalid FORMAT"})
     }
     
     if (errors.length) {

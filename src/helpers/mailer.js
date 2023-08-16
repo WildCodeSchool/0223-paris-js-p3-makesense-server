@@ -10,13 +10,13 @@ const transporter = mailer.createTransport({
     },
 });
 
-const sendResetPasswordMail = async ({ dest, url }) => {
+const sendResetPasswordMail = async ({ dest, url, duree }) => {
     const mailOptions = {
         from: "support@makesense.org",
         to: dest,
         subject: "Changement de mot de passe : ",
-        text: `Cliquez sur ce lien pour changer votre mot de passe : ${url}`,
-        html: `<p>Cliquez sur ce lien pour changer votre mot de passe : <a href=${url}>Modification du mot de passe</a>`,
+        text: `Bonjour, \nCliquez sur ce lien pour changer votre mot de passe : \n${url} (Vous avez ${duree} pour changer le mot de passe.) \nCordialment\nLe Support Makesense,`,
+        html: `Bonjour,<br/>Cliquez sur ce lien pour changer votre mot de passe :<br><a href=${url}>Modification du mot de passe</a> <p>(Vous avez ${duree} pour changer le mot de passe.)</p><br>Cordialment,<br>Le Support Makesense`,
     };
     return transporter.sendMail(mailOptions);
 };
@@ -26,8 +26,8 @@ const createAccountMail = async ({ email, password }) => {
         from: "support@makesense.org",
         to: email,
         subject: "Votre compte Makesense : ",
-        text: `Les informations de connexion de votre compte makesense : \n E-mail : ${email} \n Mot de passe : ${password}`,
-        html: `<p>Les informations de connexion de votre compte makesense : </br> E-mail : ${email} </br> Mot de passe : ${password}</p>`,
+        text: `Bonjour, \nLes informations de connexion de votre compte makesense : \nE-mail : ${email}\nMot de passe : ${password} \nCordialment,\nLe Support Makesense,`,
+        html: `Bonjour,<br/>Les informations de connexion de votre compte makesense :<br>E-mail : ${email}<br>Mot de passe : ${password}<br>Cordialment,<br>Le Support Makesense`,
     };
     return transporter.sendMail(mailOptions);
 };
