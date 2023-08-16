@@ -234,7 +234,8 @@ const migrate = async () => {
   for (let i = 0; i < user.length; i++) {
     const { firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin} = user[i];
     const hash = await argon2.hash(password);
-    await connection.query("insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    await connection.query(
+"insert into user (firstname, lastname, email, password, avatar, affiliated_site, tel, job_id, role_id, admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [firstname, lastname, email, hash, avatar, affiliated_site, tel, job_id, role_id, admin]);
     await console.log(`Add user : ${firstname} ${lastname}`);
   }

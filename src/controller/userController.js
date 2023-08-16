@@ -118,7 +118,7 @@ const register = async (req, res) => {
     }
 }
 
-const login = async (req, res) => {
+    const login = async (req, res) => {
     const {email, password} = req.body;
     if (!email || !password) return res.status(400).json("Please specify both email and password");
 
@@ -168,5 +168,8 @@ const resetPassword = async (req, res, next) => {
         next(error);
     }
 }
+
+
+
 
 module.exports = { getAllUsers, getUser, deleteUser, editUser, register,login, logout, getCurrentUser, sendResetPassword, resetPassword, getAllCountUsers};
